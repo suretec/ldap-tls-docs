@@ -2,12 +2,14 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2/EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
 
-<!ENTITY % globalentities SYSTEM './entities/global.entities'> %globalentities;]>
+<!ENTITY % globalentities SYSTEM './entities/global.entities'> %globalentities;
+
+]>
 
 <book id="suretec-ldap-docs" lang="en">
   <bookinfo>
     <title>&PROJECT-TITLE;</title>
-    <subtitle>User Guide</subtitle> 
+    <subtitle>Technical Guide</subtitle> 
     
     <authorgroup>
       <author>
@@ -15,7 +17,10 @@
 	<firstname>Gavin</firstname>
       </author>
     </authorgroup>
-    
+	<indexterm>
+	  <primary>Transport Layer Seccurity, TLS</primary>
+	  <secondary>Introduction</secondary>
+	</indexterm>    
     <pubdate>06-03-2005</pubdate>
     
     &LEGALNOTICE;
@@ -30,29 +35,12 @@
     
     <abstract>   
       <para>
-	The aim of this documentation is to enable any end user to restore the Learn-IT <trademark class="registered">SUSE</trademark> Enterprise Servers.
-	<tip>
-	<title>What to do in the event of system failure:</title>
+	The aim of this documentation is to enable any technical user to configure an &OL; Directory server which can be used for any purpose. This guide however, will focus on integration with a &SA; Server.
+	<warning>
 	<para>
-	  <orderedlist>
-	    <listitem>
-	      <para>
-		Stay calm.
-	      </para>
-	    </listitem>
-	    <listitem>
-	      <para>
-		Read <xref linkend="ch-learnit-recovery"></xref>
-	      </para>
-	    </listitem>
-	    <listitem>
-	      <para>
-		Then read <xref linkend="ch-learnit-contact"></xref>
-	      </para>
-	    </listitem>
-	  </orderedlist>
+	 This is not complete. You are warned.
 	</para>
-      </tip>
+      </warning>
       </para>
     </abstract>
     
@@ -69,7 +57,7 @@
     <sect1 id="s1-layout">
       <title>Manual Organisation</title>
       <para>
-	The Learn-IT Disaster Recovery Documentation User Guide provides information required to reinstall and maintain the &E; server's after a disaster and to use its many features to the fullest advantage. This manual is divided into the following sections:
+	The &SL; &OL; Documention Technical Guide contains the necessary information to install, configure and maintain &OL; and &SA; servers. This Guide is divided into the following sections:
       </para>
 
 	<variablelist>
@@ -85,7 +73,7 @@
 	    <term>Chapter 1</term>
 	    <listitem>
 	      <para>
-		Description of project
+		Description of Servers
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -109,7 +97,7 @@
 	    <term>Chapter 4</term>
 	    <listitem>
 	      <para>
-		Recovery description
+		Configuring
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -233,36 +221,49 @@
     </sect1>
   </preface>
     
-  <chapter id="ch-learnit-intro">
+  <chapter id="ch-ldap-intro">
     <title>Introduction</title>
     <para>
-      This guide has been written for &L;. It's purpose is to enable &L; to restore and maintain the &E; server's after a disaster.  For more information about any of the technologies used in this project, please visit some of the links below:
+      This guide blah....  For more information about any of the technologies used in this project, please visit some of the links below:
     </para>
     <variablelist>
       <varlistentry>
-	<term>&SL;</term>
+	<term>&SLL;</term>
 	<listitem>
 	  <para>
-	    The <trademark class="registered">Linux</trademark> company who maintains the &E;s disaster recovery system.
+	    The <trademark class="registered">Linux</trademark> company who maintains this Guide.
+
+	     <indexterm>
+	      <primary>Suretec</primary>
+	      <secondary>Introduction</secondary>
+	    </indexterm>
+
 	  </para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>&AL;</term>
+	<term>&OL;</term>
 	<listitem>
 	  <para>
-	    The Advanced Maryland Automatic Network Disk Archiver.
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>&RL;</term>
-	<listitem>
-	  <para>
-	    &OL; Recovery Manager (RMAN) is a component of the &OL; database that provides a tightly integrated method for creating, managing, restoring, and recovering Oracle database backups.
+	    The OpenLDAP Project.
 
 	    <indexterm>
-	      <primary>RMAN</primary>
+	      <primary>OpenLDAP</primary>
+	      <secondary>Introduction</secondary>
+	    </indexterm>
+
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>&SA;</term>
+	<listitem>
+	  <para>
+	    The Samba Project.
+
+	    <indexterm>
+	      <primary>Samba</primary>
+	      <secondary>Introduction</secondary>
 	    </indexterm>
 
 	  </para>
@@ -271,1397 +272,127 @@
     </variablelist>
   </chapter>
   
-  <chapter id="ch-learnit-overview">
-    <title>Overview of EEMS Backup/Recovery</title>
+  <chapter id="ch-ldap-overview">
+    <title>Overview of an OpenLDAP Directory Server</title>
     
     <sect1 id="s1-aims">
       <title>Aims</title>
       <para>
-	The &S; utilities aim to provide the ability to perform automated and ad-hoc backup and recovery of the &E; application. This not only includes the application and infrastructure data as held in the &E; &OL; 10g database, but also the installation of the &OL; products (i.e &OL; RDBMS 10g and &OL; Application Server 10g).
 
 	<indexterm>
-	  <primary>RDBMS</primary>
+	  <primary>OpenLDAP</primary>
+	  <secondary>Aims</secondary>
 	</indexterm>
 
-      </para>
-      
-      <para>
-	In the case of the &E; application data, the utilities will enable a "point in time" recovery to within minutes of a "point of failure" of the &OL; database. 
-      </para>
-      
-      <para>
-	This is achieved by utilising &OL;'s Recovery Manager utilty (&RL;), and the &AL; &OS; backup utility. 
-      </para>
-      
-      <para>
-	&RL; manages the backup and recovery of an &OL; instance to a &RL; backupset which is written to disk. 
-      </para>
-
-      <para>
-	&AL; manages the writing of the &RL; backupset to the correct backup tape.
-      </para>
-
-      <para>
-	For ease of use, these two utilities are managed by &S; shell scripts which can be initiated either manually or via a scheduled cron job.
-      </para>
-
-      <para>
-	The &E; &OL; product installation code trees (i.e. RDBMS and Application Server)  are backed and recovered using the <application>tar</application> utility and the compressed archive files produced are written to the relevant tape by &AL;.
-      </para>
-
-      <para>
-	The &OL; Application Server configuration files (the "fluid" component of the Application Server installation), are also written to a "backupset" using &OL;'s <filename>bkp_recover.pl</filename> <application>Perl</application> utility. The backupset's produced are again written to the relevant tape by &AL;.
-      </para>
-    </sect1>
-    
-    <sect1 id="s1-RMAN">
-      <title>RMAN - <trademark class="registered">Oracle</trademark>s Recovery Manager</title>
-      <para>
-	&RL; was introduced with release 8.0.3 of the &OL; RDBMS and was designed to improve on the rather limited database backup functionality provided by the <application>exp</application> export utility and <application>ebu</application>- the Enterprise Backup Utility.
-      </para>
-      
-      <para>
-	From it's early humble beginnings it has continued to be developed and improved, so that today it can offer facilities to the &OL; DBA to achieve almost any kind of backup and recovery scenario.
-      </para>
-
-      <para>
-	The &S;c scripts utilise &RL; in order to perform what is called a <option>warm</option> or <option>online</option> backup of the database. This means that the database can still be used whilst the backup is being taken. Whilst &RL; is capable of writing directly to tape, we do not do this here. Rather it writes it's backupset to disk, where thereafter it (and any other relevant files) are written to the correct backup tape by &AL;.
-      </para>
-
-      <para>
-	Coming back the other way &RL; will restore a database from an &RL; backupset on disk (having first been restored there from the relevent backup tape by &AL;). 
-      </para>
-
-      <para>
-	By using this backupset set, along with other outstanding archive redo log files, &RL; will be able to recover the &E; database to within minutes of a point of failure.
-      </para>
-
-      <para>
-	(The &E; database not only writes archive redo log files to the database server (&DB;), but also writes them to the application server (&AP;), via an NFS mount. This will enable a point-in-time recovery to be done, even in the event of a catostrophic failure of the database server).
-      </para>
-    </sect1>
-
-    <sect1 id="s1-Amanda">
-      <title>AMANDA</title>
-
-      <sect2 id="s2-am-intro">
-	<title>Introduction</title>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>Intro</secondary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>version</secondary>
-	</indexterm>
-   
-	<para>
-	  &AL;, the Advanced Maryland Automatic Network Disk Archiver, is a backup system that allows the administrator of a LAN to set up a single master backup server to back up multiple hosts to a single large capacity tape drive, a autoloading tape drive or a hardrive. &AL; uses native <command>dump</command> and/or <command>GNU tar</command> facilities and can back up a large number of workstations/servers running multiple versions of <trademark class="registered">Unix</trademark> or <trademark class="registered">Microsoft Windows</trademark> (95/98/NT/2000/XP)-based hosts. 
-	</para>
-	<para>
-	  &AL; was written primarily by James da Silva at the Department of Computer Science of the University of Maryland around 1992. The goal was to be able to back up large numbers of client workstations to a single backup server machine.
-	</para>
-	<para>
-	  &AL; was driven by the introduction of large capacity tape drives, such as ExaByte 8mm and DAT 4mm. With these drives, and the increased number of personal workstations, it no longer made sense to back up individual machines to separate media. Coordinating access and providing tape hardware was prohibitive in effort and cost. A typical solution to this problem reaches out to each client from the tape host and dumps areas one by one across the network. But this usually cannot feed the tape drive fast enough to keep it in streaming mode, causing a severe performance penalty.
-	</para>
-	<para>
-	  The &AL; approach is to use a <emphasis>holding disk</emphasis> on the tape server machine, do several dumps in parallel into files in the holding disk, and have an independent process take data out of the holding disk. Because most dumps are small partials, even a modest amount of holding disk space can provide an almost optimal flow of dump images onto tape.
-	</para>
-	<para>
-	  &AL; also has a unique approach to scheduling dumps. A <emphasis>dump cycle</emphasis> is defined for each area to control the maximum time between full dumps. &AL; takes that information, statistics about past dump performance, and estimates on the size of dumps for this run to decide which backup level to do. This gets away from the traditional static <emphasis>it's Friday so do a full dump of <filename>/usr</filename> on client A</emphasis> approach and frees &AL; to balance the dumps so that the total run time is roughly constant from day to day.
-	</para>
-	<para>
-	  &AL; is freely-available software maintained by the &AL; Users Group and supported commercially via the <ulink url="http://www.amanda.org/support/commercial.php">Commercial Support</ulink> companies.
-	</para>
-	<para>
-	  The &E; servers are using &AL; version 2.4.4p3.
-	</para>
-      </sect2>
-
-      <sect2 id="s2-amanda-config">
-	<title>Current Configuration</title>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>current configuration</secondary>
-	</indexterm>
-
-	<para>
-	  &AL; in its current configuration, is know where near as fully untilised as it would if it was backing up large amounts of clients, therefore features like incremental backups etc. are not active. For backing up the &AP; and &DB; servers, full backups each backup run are implemented, i.e. level 0 backups.
-	</para>
-	<para>
-	  Because the backup configuration requirements are quite diverse, we have opted to have three seperate &AL; configuration files for each server. There are however, only two (one on each server) that are implemented automatically. The other four (two on each server) are to be run by hand and as such, called <emphasis>Ad-hoc</emphasis> backups (see <xref linkend="s1-backup-scripts"></xref> for the six script names).
-	</para>
-	<para>
-	  
-	</para>
-      </sect2>
-      <sect2 id="s2-amanda-man-pages">
-	<title>Man Pages</title>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amadmin</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amanda</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amcheck</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amcheckdb</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amcleanup</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amdd</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amdump</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amflush</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amgetconf</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amlabel</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>ammt</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amoverview</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amplot</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amrestore</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amrmtape</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amstatus</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amtape</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amtapetype</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amtoc</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amverify</tertiary>
-	</indexterm>
-
-	<indexterm>
-	  <primary>Amanda</primary>
-	  <secondary>man pages</secondary>
-	  <tertiary>amverifyrun</tertiary>
-	</indexterm>
-	
-	<para>
-	  The &AL; package consists of various individual command line programs. Here are all their man pages for quick reference:
-	<itemizedlist>
-	  <listitem><para><ulink url="amadmin.8.html">&amadmin;</ulink></para></listitem>
-	  <listitem><para><ulink url="amanda.8.html">&amanda;</ulink></para></listitem>
-	  <listitem><para><ulink url="amcheck.8.html">&amcheck;</ulink></para></listitem>
-	  <listitem><para><ulink url="amcheckdb.8.html">&amcheckdb;</ulink></para></listitem>
-	  <listitem><para><ulink url="amcleanup.8.html">&amcleanup;</ulink></para></listitem>
-	  <listitem><para><ulink url="amdd.8.html">&amdd;</ulink></para></listitem>	
-	  <listitem><para><ulink url="amdump.8.html">&amdump;</ulink></para></listitem>
-	  <listitem><para><ulink url="amflush.8.html">&amflush;</ulink></para></listitem>	  
-	  <listitem><para><ulink url="amgetconf.8.html">&amgetconf;</ulink></para></listitem>	  
-	  <listitem><para><ulink url="amlabel.8.html">&amlabel;</ulink></para></listitem>	 
-	  <listitem><para><ulink url="ammt.8.html">&ammt;</ulink></para></listitem>
-	  <listitem><para><ulink url="amoverview.8.html">&amoverview;</ulink></para></listitem>
-	  <listitem><para><ulink url="amplot.8.html">&amplot;</ulink></para></listitem>
-	  <listitem><para><ulink url="amreport.8.html">&amreport;</ulink></para></listitem>
-	  <listitem><para><ulink url="amrestore.8.html">&amrestore;</ulink></para></listitem>
-	  <listitem><para><ulink url="amrmtape.8.html">&amrmtape;</ulink></para></listitem>
-	  <listitem><para><ulink url="amstatus.8.html">&amstatus;</ulink></para></listitem>
-	  <listitem><para><ulink url="amtape.8.html">&amtape;</ulink></para></listitem>	 
-	  <listitem><para><ulink url="amtapetype.8.html">&amtapetype;</ulink></para></listitem>	
-	  <listitem><para><ulink url="amtoc.8.html">&amtoc;</ulink></para></listitem>
-	  <listitem><para><ulink url="amverify.8.html">&amverify;</ulink></para></listitem>
-	  <listitem><para><ulink url="amverifyrun.8.html">&amverifyrun;</ulink></para></listitem>
-	</itemizedlist>
-	</para>
-      </sect2>
+      </para> 
     </sect1>
   </chapter>
   
-  <chapter id="ch-learnit-backup">
-    <title>Suretec Backup and Recovery</title>
-    <sect1 id="s1-backup-env">
-      <title>Environment</title>
-      <para>
-	The &S; scripts are designed to be run by user <emphasis>root</emphasis>.  The scripts then <command>su</command> to the <wordasword>oracle</wordasword> user to run the relevant &OL; utility.
-      </para>
-
-      <para>
-	The scripts and utilities refer to the following directories (depending on the server):
-    </para>
-    
-    <sect2 id="s2-appserv-inf">
-      <title>APPSERV - Infrastructure</title>
-      <para>
-	<table id="tb-appserv-inf">
-	  <title>APPSERV - Infrastructure details</title>
-	  <tgroup cols="3">
-	    <colspec colnum="1" colname="Directory" colwidth="1" />
-	    <colspec colnum="2" colname="Description" colwidth="1" />
-	    <colspec colnum="3" colname="Env-var" colwidth="1" />
-	      <thead>
-		<row>
-		  <entry>Directory</entry>
-		  <entry>Description</entry>
-		  <entry>Env Variable</entry>
-		</row>
-	      </thead>
-	      
-	      <tbody>
-		<row>
-		  <entry><filename>/u01/app/oracle</filename></entry>
-		  <entry>Oracle base directory</entry>
-		  <entry><option>ORACLE_BASE</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/u01/app/oracle/product/prod/as10i</filename></entry>
-		  <entry>Infrastructure home directory</entry>
-		  <entry><option>ORACLE_HOME</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/u01/app/oracle/backups/infra</filename></entry>
-		  <entry>Infastructure backups directory</entry>
-		  <entry><option>ORACLE_INF_BKUP</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec</filename></entry>
-		  <entry>Suretec home directory</entry>
-		  <entry><option>STS_HOME</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec/backups/scripts</filename></entry>
-		  <entry>Location of backup scripts</entry>
-		  <entry><option>STS_BU_SCRIPTS</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec/backups/logs</filename></entry>
-		  <entry>Location of log files</entry>
-		  <entry><option>STS_BU_LOGS</option></entry>
-		</row>
-	      </tbody>
-	  </tgroup>
-	  </table>
-      </para>
-    </sect2>
-    
-    <sect2 id="s2-appserv-mt">
-      <title>APPSERV - MidTier</title>
-      <para>
-	<table id="tb-appserv-mt">
-	  <title>APPSERV - MidTier details</title>
-	  <tgroup cols="3">
-	    <colspec colnum="1" colname="Directory" colwidth="1" />
-	    <colspec colnum="2" colname="Description" colwidth="1" />
-	    <colspec colnum="3" colname="Env-var" colwidth="1" />
-	      <thead>
-		<row>
-		  <entry>Directory</entry>
-		  <entry>Description</entry>
-		  <entry>Env Variable</entry>
-		</row>
-	      </thead>
-	      
-	      <tbody>
-		<row>
-		  <entry><filename>/u01/app/oracle</filename></entry>
-		  <entry>Oracle base directory</entry>
-		  <entry><option>ORACLE_BASE</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/u01/app/oracle/product/prod/as10_i</filename></entry>
-		  <entry>Midtier home directory</entry>
-		  <entry><option>ORACLE_HOME</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/u01/app/oracle/backups/mid1</filename></entry>
-		  <entry>Midtier backups directory</entry>
-		  <entry><option>ORACLE_MT_BKUP</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec</filename></entry>
-		  <entry>Suretec home directory</entry>
-		  <entry><option>STS_HOME</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec/backups/scripts</filename></entry>
-		  <entry>Location of backup scripts</entry>
-		  <entry><option>STS_BU_SCRIPTS</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec/backups/logs</filename></entry>
-		  <entry>Location of log files</entry>
-		  <entry><option>STS_BU_LOGS</option></entry>
-		</row>
-	      </tbody>
-	  </tgroup>
-	</table>
-      </para>
-    </sect2>
-    
-    <sect2 id="s2-dbserv-db">
-      <title>DBSERV - EEMS Database</title>
-      <para>
-	<table id="tb-dbserv-db">
-	    <title>DBSERV - EEMS details</title>
-	    <tgroup cols="3">
-	      <colspec colnum="1" colname="Directory" colwidth="1" />
-	      <colspec colnum="2" colname="Description" colwidth="1" />
-	      <colspec colnum="3" colname="Env-var" colwidth="1" />
-	      <thead>
-		<row>
-		  <entry>Directory</entry>
-		  <entry>Description</entry>
-		  <entry>Env Variable</entry>
-		</row>
-	      </thead>
-	      
-	      <tbody>
-		<row>
-		  <entry><filename>/u01/app/oracle</filename></entry>
-		  <entry>Oracle base directory</entry>
-		  <entry><option>ORACLE_BASE</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/u01/app/oracle/product/ora92</filename></entry>
-		  <entry>Oracle DB home directory</entry>
-		  <entry><option>ORACLE_HOME</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/u01/app/oracle/backups/EEMS</filename></entry>
-		  <entry>EEMS DB backups directory</entry>
-		  <entry><option>ORACLE_BKUP</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec</filename></entry>
-		  <entry>Suretec home directory</entry>
-		  <entry><option>STS_HOME</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec/backups/scripts</filename></entry>
-		  <entry>Location of backup scripts</entry>
-		  <entry><option>STS_BU_SCRIPTS</option></entry>
-		</row>
-		<row>
-		  <entry><filename>/opt/suretec/backups/logs</filename></entry>
-		  <entry>Location of log files</entry>
-		  <entry><option>STS_BU_LOGS</option></entry>
-		</row>
-	      </tbody>
-	    </tgroup>
-	</table>
-       </para>
-    </sect2>
-    </sect1>
-
-    <sect1 id="s1-backup-scripts">
-      <title>Backup Scripts</title>
+  <chapter id="ch-ldap-tls">
+    <title>Transport Layer Security</title>
+    <sect1 id="s1-intro-ldap-tls">
+      <title>Introduction</title>
       <para>
 
-	<table id="tb-backup-scripts">
-	  <title>Backup Scripts details</title>
-	  <tgroup cols="4">
-	      <colspec colnum="1" colname="script" colwidth="1" />
-	      <colspec colnum="2" colname="frequency" colwidth="1" />
-	      <colspec colnum="3" colname="description" colwidth="1" />
-	      <colspec colnum="4" colname="parameters" colwidth="1" />
-	      <thead>
-		<row>
-		  <entry>Script</entry>
-		  <entry>Frequency</entry>
-		  <entry>Description</entry>
-		  <entry>Parameters</entry>
-		</row>
-	      </thead>
+	<indexterm>
+	  <primary>Transport Layer Seccurity, TLS</primary>
+	  <secondary>Introduction</secondary>
+	</indexterm>
 
-	      <tbody>
-		<row>
-		  <entry><filename>appserv_backup_cfg.sh</filename></entry>
-		  <entry>Weekly</entry>
-		  <entry>Backup infrastructure and midtier configuration files</entry>
-		  <entry>None</entry>
-		</row>
-		<row>
-		  <entry><filename>appserv_backup_inf_inst.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Backup infrastructure code tree</entry>
-		  <entry>None</entry>
-		</row>
-		<row>
-		  <entry><filename>appserv_backup_mt_inst.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Backup midtier code tree</entry>
-		  <entry>None</entry>
-		</row>
-		<row>
-		  <entry><filename>dbserv_backup_db_inst.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Backup database code tree</entry>
-		  <entry>[orahome] - e.g. <option>ora92</option></entry>
-		</row>
-		<row>
-		  <entry><filename>dbserv_backup_db_cold.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Shutdown database and backup to <filename>tar.gz</filename> file.</entry>
-		  <entry>[oracle_sid] - e.g. <option>EEMS</option></entry>
-		</row>
-		<row>
-		  <entry><filename>dbserv_backup_db_warm.sh</filename></entry>
-		  <entry>Daily</entry>
-		  <entry>&RL; On-line backup of &E; database</entry>
-		  <entry>[oracle_sid] - e.g. <option>EEMS</option></entry>
-		</row>
-		</tbody>
-	    </tgroup>
-	  </table>
       </para>
     </sect1>
 
-    <sect1 id="s1-rec-scripts">
-      <title>Recovery Scripts</title>
+    <sect1 id="s1-config-ldap-tls">
+      <title>Configuring</title>
       <para>
-	
-	<table id="tb-rec-scripts">
-	  <title>Recovery Scripts details</title>
-	  <tgroup cols="4">
-	    <colspec colnum="1" colname="Script" colwidth="1" />
-	    <colspec colnum="2" colname="Frequency" colwidth="1" />
-	    <colspec colnum="3" colname="Description" colwidth="1" />
-	    <colspec colnum="4" colname="Parameters" colwidth="1" />
-	      <thead>
-		<row>
-		  <entry>Script</entry>
-		  <entry>Frequency</entry>
-		  <entry>Description</entry>
-		  <entry>Parameters</entry>
-		</row>
-	      </thead>
-	      
-	      <tbody>
-		<row>
-		  <entry><filename>appserv_rest_cfg.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Restore infrastructure and midtier configuration files</entry>
-		  <entry>
-		    <para>None</para>
-		    <para>
-		      <screen>
-			<computeroutput>
- Switches:
-  -s TAPE -  Latest backup tape (default)
-  -s DISK -  Current backupset on disk
-  -c MT   -  Midtier
-  -c INF  -  Infrastructure
-  -c      -  BOTH Midtier and Infrastructure (default)
-			</computeroutput>
-		      </screen>
-		    </para>		    
-		  </entry>
-		</row>
-		<row>
-		  <entry><filename>appserv_rest_inf_inst.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Restore infrastructure code tree</entry>
-		  <entry>None</entry>
-		</row>
-		<row>
-		  <entry><filename>appserv_rest_mt_inst.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Restore midtier code tree</entry>
-		  <entry>None</entry>
-		</row>
-		<row>
-		  <entry><filename>dbserv_rest_db_inst.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Restore database code tree</entry>
-		  <entry>[orahome] - e.g. <option>ora92</option></entry>
-		</row>
-		<row>
-		  <entry><filename>dbserv_rest_db_cold.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Restore database from <filename>tar.gz</filename> file</entry>
-		  <entry>
-		    <para>[oracle_is] - e.g. <option>EEMS</option></para>
-		    <para>
-		      <screen>
-			<computeroutput>
- Switches:
-  -s TAPE -  Latest backup tape (default)
-  -s DISK -  Current backupset on disk
-			</computeroutput>
-		      </screen>
-		    </para>		    
-		  </entry>
-		</row>
-		<row>
-		  <entry><filename>dbserv_rest_db_warm.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Full or incomplete recovery of database from &RL; backupset.</entry>
-		  <entry>
-		    <para>[oracle_is] - e.g. <option>EEMS</option></para>
-		    <para>
-		      <screen>
-			<computeroutput>
- Switches:
-  -s TAPE               - Latest backup tape 
-  -s DISK               - Current backupset on disk (default)
-  -f                    - Full RMAN recovery
-  -i [last archivelog]  - Incomplete &RL; recovery 			  
-			</computeroutput>
-		      </screen>
-		    </para>		    
-		  </entry>
-		</row>
-	      </tbody>
-	  </tgroup>
-	</table>
+
+	<indexterm>
+	  <primary>Transport Layer Seccurity, TLS</primary>
+	  <secondary>Configuring</secondary>
+	</indexterm>
+
       </para>
     </sect1>
 
-    <sect1 id="s1-util-scripts">
-      <title>Utility Scripts</title>
+    <sect1 id="s1-test-ldap-tls">
+      <title>Testing</title>
       <para>
 
-	<table id="tb-util-scripts">
-	    <title>Utility scripts details</title>
-	    <tgroup cols="4">
-	      <colspec colnum="1" colname="Script" colwidth="1" />
-	      <colspec colnum="2" colname="Frequency" colwidth="1" />
-	      <colspec colnum="3" colname="Description" colwidth="1" />
-	      <colspec colnum="4" colname="Parameters" colwidth="1" />
-	      <thead>
-		<row>
-		  <entry>Script</entry>
-		  <entry>Frequency</entry>
-		  <entry>Description</entry>
-		  <entry>Parameters</entry>
-		</row>
-	      </thead>
+	<indexterm>
+	  <primary>Transport Layer Seccurity, TLS</primary>
+	  <secondary>Testing</secondary>
+	</indexterm>
 
-	      <tbody>
-		<row>
-		  <entry><filename>mail_suretec_logs.sh</filename></entry>
-		  <entry>Ad-hoc</entry>
-		  <entry>Mail Suretec logs to <email>support@suretecsystems.com</email></entry>
-		  <entry><option>NONE</option></entry>
-		</row>
-	      </tbody>
-	    </tgroup>
-	  </table>
       </para>
     </sect1>
+
+    <sect1 id="s1-int-ldap-tls">
+      <title>Implementing</title>
+      <para>
+
+	<indexterm>
+	  <primary>Transport Layer Seccurity, TLS</primary>
+	  <secondary>Implementing</secondary>
+	</indexterm>
+
+      </para>
+    </sect1>
+
   </chapter>
 
-  <chapter id="ch-learnit-recovery">
-    <title>Recovery</title>
-    
-    <sect1 id="s1-appserv-recov">
-      <title>Recovering the APP Server</title>
+  <chapter id="ch-ldap-sasl">
+    <title>Simple Authentication and Security Layer</title>
+    <sect1 id="s1-intro-ldap-sasl">
+      <title>Introduction</title>
       <para>
-	These steps are necessary for recovery when the &AP; server has been completely rebuilt.
-      </para>
-      <para>
-	<orderedlist>
-	  <listitem>
-	    <para>
-	      Install the &AP; RPM file called <filename>appserv-suretec-&lt;latest-version&gt;.i386.rpm</filename>, as <emphasis>root</emphasis>, using the following command:
-	      <screen width="90">
-		<computeroutput>
-		  rpm -Uvh <filename>appserv-suretec-&lt;latest-version&gt;.i386.rpm</filename>
-		</computeroutput>
-	      </screen>
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      Run the correct recovery script, referring to <xref linkend="s1-rec-scripts"></xref> and <xref linkend="ch-backup-recovery"></xref>
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      If unsure, please see <xref linkend="ch-learnit-contact"></xref>
-	    </para>
-	  </listitem>
-	</orderedlist>
-      </para>    
-    </sect1>
-    
-    <sect1 id="s1-dbserv-recov">
-      <title>Recovering the DB Server</title>
-<para>
-	These steps are necessary for recovery when the &AP; server has been completely rebuilt.
-      </para>
-      <para>
-	<orderedlist>
-	  <listitem>
-	    <para>
-	      Install the &DB; RPM file called <filename>dbserv-suretec-&lt;latest-version&gt;.i386.rpm</filename>, as <emphasis>root</emphasis>, using the following command:
-	      <screen width="90">
-		<computeroutput>
-		  rpm -Uvh <filename>dbserv-suretec-&lt;latest-version&gt;.i386.rpm</filename>
-		</computeroutput>
-	      </screen>
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      Run the correct recovery script, referring to <xref linkend="s1-rec-scripts"></xref> and <xref linkend="ch-backup-recovery"></xref>
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      If unsure, please see <xref linkend="ch-learnit-contact"></xref>
-	    </para>
-	  </listitem>
-	</orderedlist>
+
+	<indexterm>
+	  <primary>Simple Authentication and Security Layer, SASL</primary>
+	  <secondary>Introduction</secondary>
+	</indexterm>
+
       </para>
     </sect1>
+
+    <sect1 id="s1-config-ldap-sasl">
+      <title>Configuring</title>
+      <para>
+
+	<indexterm>
+	  <primary>Simple Authentication and Security Layer, SASL</primary>
+	  <secondary>Configuring</secondary>
+	</indexterm>
+
+      </para>
+    </sect1>
+
+    <sect1 id="s1-test-ldap-sasl">
+      <title>Testing</title>
+      <para>
+
+	<indexterm>
+	  <primary>Simple Authentication and Security Layer, SASL</primary>
+	  <secondary>Testing</secondary>
+	</indexterm>
+
+
+      </para>
+    </sect1>
+
+    <sect1 id="s1-int-ldap-sasl">
+      <title>Implementing</title>
+      <para>
+
+	<indexterm>
+	  <primary>Simple Authentication and Security Layer, SASL</primary>
+	  <secondary>Implementing</secondary>
+	</indexterm>
+
+      </para>
+    </sect1>    
   </chapter>
   
-  <chapter id="ch-learnit-technical-info">
-    <title>Technical Information</title>
-    
-    <sect1 id="s1-oracle-chg">
-	<title>Oracle Configuration Changes</title>
-	
-	<sect2 id="s2-initeems.ora">
-	  <title>initEEMS.ora</title>
-	  <para>The following initialisation parameters were added or changed:
-
-	  <table id="tb-initeems.ora">
-	    <title>initEEMS.ora initialisation parameters</title>
-	    <tgroup cols="2">
-	      <colspec colnum="1" colname="Parameter" colwidth="3" />
-	      <colspec colnum="2" colname="Value" colwidth="1" />
-	      <thead>
-		<row>
-		  <entry>Parameters</entry>
-		  <entry>Value</entry>
-		</row>
-	      </thead>
-
-	      <tbody>
-		<row>
-		  <entry><option>log_archive_dest_1</option></entry>
-		  <entry><option>location=/u01/app/oracle/archive/EEMS</option></entry>
-		</row>
-		<row>
-		  <entry><option>log_archive_dest_2</option></entry>
-		  <entry><option>location=/mnt/archdest2/EEMS</option></entry>
-		</row>
-		<row>
-		  <entry><option>log_archive_format</option></entry>
-		  <entry><option>%t_%s.dbf</option></entry>
-		</row>
-		<row>
-		  <entry><option>log_archive_start</option></entry>
-		  <entry><option>TRUE</option></entry>
-		</row>
-	      </tbody>
-	    </tgroup>
-	  </table>
-	  
-	  </para>
-	</sect2>
-    </sect1>
-    
-    <sect1 id="s1-amanda-req">
-      <title>Amanda Requirements</title>
-      <para>
-	Changes were made to...
-      </para>
-    </sect1>
-    
-    <sect1 id="s2-cronjob-dbserv">
-      <title>Cronjobs - Dbserv</title>
-      <para>
-	<table id="tb-cron-dbserv">
-	  <title>Dbserv Cronjobs</title>
-	  <tgroup cols="3">
-	    <colspec colnum="1" colname="Job" colwidth="3" />
-	    <colspec colnum="2" colname="Description" colwidth="1" />
-	    <colspec colnum="3" colname="Frequency" colwidth="1" />
-	    <thead>
-	      <row>
-		<entry>Job</entry>
-		<entry>Description</entry>
-		<entry>Frequency</entry>
-	      </row>
-	    </thead>
-	    
-	    <tbody>
-	      <row>
-		<entry><option>/opt/suretec/sbin/amcheck -a learnit-dbserv-db-warm</option></entry>
-		<entry>Amanda tape check for warm backup</entry>
-		<entry>Monday to Friday at 14:00 hours</entry>
-	      </row>
-	      <row>
-		<entry><option>/opt/suretec/backups/scripts/dbserv_backup_db_warm.sh EEMS</option></entry>
-		<entry>Warm backup of &E; database</entry>
-		<entry>Monday to Friday at 19:00 hours</entry>
-	      </row>
-	      <row>
-		<entry><option>/usr/bin/find /u01/app/oracle/archive/EEMS/*.dbf -mtime +7 -exec rm {} \;</option></entry>
-		  <entry>Delete archive logs older than 7 days on primary destination</entry>
-		  <entry>Monday to Friday at 03:00 hours</entry>
-	      </row>
-	      <row>
-		<entry><option>/usr/bin/find /mnt/archdest2/EEMS/*.dbf -mtime +7 -exec rm {} \;</option></entry>
-		<entry>Delete archive logs older than 7 days on secondary destination</entry>
-		<entry>Monday to Friday at 03:00 hours</entry>
-	      </row>
-	    </tbody>
-	  </tgroup>
-	</table>
-      </para>
-    </sect1>
-
-    <sect1 id="s2-cronjob-appserv">
-      <title>Cronjobs - Appserv</title>
-      <para>
-	<table id="tb-cron-appserv">
-	  <title>Appserv Cronjobs</title>
-	  <tgroup cols="3">
-	    <colspec colnum="1" colname="Job" colwidth="3" />
-	    <colspec colnum="2" colname="Description" colwidth="1" />
-	    <colspec colnum="3" colname="Frequency" colwidth="1" />
-	    <thead>
-	      <row>
-		<entry>Job</entry>
-		<entry>Description</entry>
-		<entry>Frequency</entry>
-	      </row>
-	    </thead>
-	    
-	    <tbody>
-	      <row>
-		<entry><option>/opt/suretec/sbin/amcheck -a learnit-appserv-cfg</option></entry>
-		<entry>Amanda tape check for configuration backup</entry>
-		<entry>Every Friday at 14:00 hours</entry>
-	      </row>
-	      <row>
-		<entry><option>/opt/suretec/backups/scripts/appserv_backup_cfg.sh</option></entry>
-		<entry>Backup of 10g AS Configuration files</entry>
-		<entry>Every Sunday at 10:00 hours</entry>
-	      </row>
-	    </tbody>
-	  </tgroup>
-	</table>
-      </para>
-    </sect1>
-  </chapter>
-
-<chapter id="ch-backup-recovery">
-    <title>Backup and Recovery Scenarios</title>
-    <para>
-      The following sections give some typical examples of backup and recovery, and how to execute them.
-    </para>
-
-    <sect1 id="s1-ad-hocs-backups">
-      <title>Ad-hoc Backups</title>
-      <para>
-	The ad-hoc backups do not need any detailed explanation as to how to run them. The only thing to bear in mind is that prior to running them the hosting company will have to be instructed to load the appropriate tape, as typically only the tapes for scheduled jobs will be pre-loaded.
-      </para>
-      <para>
-	In any case &AL; will not start the tape write, unless the correct tape is loaded.
-      </para>
-    </sect1>
-
-    <sect1 id="s1-restore-appserv-cfg">
-      <title>Restore Application Server Configuration Files</title>
-      <para>
-	Why:
-      </para>
-      <para>
-	Typically a restore of the Mid-tier or Infrastructure configuration files will only need to be done if a complicated configuration change needs to be reverted, or when the files have accidently been deleted from the file system.
-      </para>
-      <para>
-	How:
-      </para>
-      <para>
-	The restore is executed by running the script <filename>/opt/suretec/backups/scripts/appserv_rest_cfg.sh</filename> as user <emphasis>root</emphasis>. The command usage is:
-
-	<screen width="90">
-	  <computeroutput>
-Usage: appserv_rest_inf_cfg.sh [options] 
-
-Ad-hoc restore	of Application Server Infrastructure and/or
-Middle Tier configuration files.
-
-This can be from latest backup tape or from existing backup sets on disk
-
-Options:
-  -s	Restore source. Values:
-       TAPE - Latest backup tape
-       DISK - Latest backup sets on disk (default)
-
-  -c	Component to restore. Values:
-       MT   - Middle Tier only
-       INF  - Infrastructure only
-       BOTH - Both Middle Tier and Infrastructure (default)
-       NONE - Neither. (Can only be used with -s set to TAPE)
-              This will re-create the backup sets on disk from tape
-              but will not attempt to update the Application Server
-
-  -h	Display help on usage
-	  </computeroutput>
-	</screen>
-      </para>
-      <para>
-	The Application Server does not have to be stopped in order to do the restore as the Oracle backup utility will attempt to re-synchronise the server with the restored files at the end of the job.
-      </para>
-      <para>
-	The backupsets for the configuration files can be found in the following directories on &AP;:
-
-	<screen width="90">
-	  <computeroutput>
-Midtier:		/u01/app/oracle/backups/mid1/config-files
-Infrastructure: 	/u01/app/oracle/backups/infra/config-files
-	  </computeroutput>
-	</screen>
-      </para>
-      <para>
-	The files will be named in the format  <filename>config_bkp_&lt;YYYY-MM-DD_HH-MI&gt;</filename> where <filename>&lt;YYYY-MM-DD_HH-MI&gt;</filename> is the datetime stamp of when the backupset was created.
-      </para>
-    
-      <sect2 id="s2-appserv-examples">
-	<title>Examples</title>
-	<para>
-	  If a recent backup has been done and is still on disk and you wish to restore both the midtier and infrastructure files then you would initiate the the scripts as follows:
-	</para>
-	<para>
-	  <screen width="90">
-	    <computeroutput>
-/opt/suretec/backups/scripts/appserv_rest_cfg.sh
-	    </computeroutput>
-	  </screen>
-	</para>
-	<para>
-	  To restore the midtier files only from the current tape run as follows:
-	</para>
-	<para>
-	  <screen width="90">
-	    <computeroutput>
-/opt/suretec/backups/scripts/appserv_rest_cfg.sh -sTAPE -cMT
-	    </computeroutput>
-	  </screen>
-	</para>
-	<para>
-	  To restore both midtier and infrastructure backupset from tape to disk, but WITHOUT restoring the configuration files:
-	</para>
-	<para>
-	  <screen width="90">
-	    <computeroutput>
-/opt/suretec/backups/scripts/appserv_rest_cfg.sh -sTAPE -cNONE
-	    </computeroutput>
-	  </screen>
-	</para>
-      </sect2>
-    </sect1>
-
-    <sect1 id="s2-restore-db-cold">
-      <title>Restore Database from Cold Backup</title>
-      <para>
-	Why:
-      </para>
-      <para>
-	A restore from a cold backup would normally be done in the case where an upgrade or patch to the database had to be reverted (assuming of course a cold backup had been previously been done prior to the change).
-      </para>
-      <para>
-	How:
-      </para>
-      <para>
-	First ensure that the database has been shutdown (using the &OL; supplied procedures).
-      </para>
-      <para>
-	Run the script <filename>/opt/suretec/backups/scripts/dbserv_rest_db_cold.sh</filename> under user <emphasis>root</emphasis>.
-	<screen width="90">
-	  <computeroutput>
-The command usage is:
-
-Usage: dbserv_rest_db_cold.sh [options] $ORACLE_SID
-
-Ad-hoc restore	of cold database backup from tar file
-This can be from latest backup tape or from existing tarfile on disk
-
-$ORACLE_SID   - SID of oracle instance
-
-Options:
-  -s	Restore source. Values:
-         TAPE - Latest backup tape (default)
-         DISK - Latest backup sets on disk
-
-  -h	Display help on usage
-	  </computeroutput>
-	</screen>
-      </para>
-      <para>
-	The cold backupset will be located in the folder <filename>/u01/app/oracle/backups/&lt;ORACLE_SID&gt;</filename>  and will named in the format: <filename>dbserv_cold_&lt;YYYYMMDDHHMISS&gt;.tar.gz</filename>, where <option>&lt;ORACLE_SID&gt;</option> is the database instance (eg &E;) and <option>&lt;YYYYMMDDHHMISS&gt;</option> is the date/time stamp when the file was created.
-      </para>
-    
-      <sect2 id="s2-cold-examples">
-	<title>Examples</title>
-	<para>
-	  If the latest backupset is still on disk then run:
-	  <screen width="90">
-	  <computeroutput>
-/opt/suretec/backups/scripts/dbserv_rest_db_cold.sh EEMS
-	  </computeroutput>
-	</screen>
-	</para>
-	<para>
-	  If restoring from the currently loaded tape then run:
-	<screen width="90">
-	  <computeroutput>
-/opt/suretec/backups/scripts/dbserv_rest_db_cold.sh -sTAPE EEMS
-	  </computeroutput>
-	</screen>
-      </para>
-      </sect2>
-    </sect1>
-    
-    <sect1 id="s1-restore-db-warm">
-      <title>Restore Database from Warm Backup</title>
-      <para>
-	Why:
-      </para>
-      <para>
-	There any number of reasons why one would restore from a warm backup, and with the &RL; utility very many different ways of doing it.  The Suretec scripts have been designed to simplify this from the operator's point of view by only considering two types of recovery:
-      </para>
-
-      <variablelist>
-	<varlistentry>
-	  <term>Full Recovery</term>
-	  <listitem>
-	    <para>
-	      Where all online and archive redo log files exist and at least one controlfile also exists. 
-	    </para>
-	  </listitem>
-	</varlistentry>
-	<varlistentry>
-	  <term>Incomplete Recovery</term>
-	  <listitem>
-	    <para>
-	      Where some or all of the archive redo logs exist but the online redo logs and/or controlfile is not available.
-	    </para>
-	  </listitem>
-	</varlistentry>
-      </variablelist>
-
-      <para>
-	How:
-      </para>
-      <para>
-	Both types of recovery are possible by running the script <filename>/opt/suretec/backups/scripts/dbserv_rest_db_warm.sh</filename> under user <emphasis>root</emphasis>.
-	<screen width="90">
-	  <computeroutput>
-The options for running are as follows:
-
-Usage: dbserv_rest_db_warm.sh [options] \$ORACLE_SID
-
-Ad-hoc restore	of specified database from the latest warm backup.
-This can be from latest backup tape or from existing backup sets on disk
-
-\$ORACLE_SID   - SID of oracle instance
-
-Options:
-  -s   Restore source. Values:
-       TAPE - Latest backup tape
-       DISK - Latest backup sets on disk (default)
-
-  -f   Full database recovery:
-       Where online redo log files and at least one controlfile exists
-
-  -i   Incomplete database recovery:
-       Where neither the online redo log files or controfiles exist.
-       Archived redo logs must be present
-
-       Option value: Last archive redo log name (%t_%s.dbf format)
-
-  -h	Display help on usage
-	  </computeroutput>
-	</screen>
-      </para>
-      <para>
-	Ensure that the database is shutdown (It likely will be already).
-      </para>
-      <para>
-	Check whether a warm &RL; backupset is already located in the folder 
-	<filename>/u01/app/oracle/backups/&lt;ORACLE_SID&gt;</filename>  where <option>&lt;ORACLE_SID&gt;</option> is the database instance (eg &E;).
-      </para>
-      <para>
-	The backup set will be one or more files named <filename>warm_&lt;RMANSID&gt;</filename>, where <option>&lt;RMANSID&gt;</option> is a sequence of numbers only meaningful to &RL;.
-      </para>
-      <para> 
-	You can determine when the backupset was created by executing the command:
-	<screen width="90">
-	  <computeroutput>
-ls -l /u01/app/oracle/backups/EEMS/warm* 
-	  </computeroutput>
-	</screen>
-	and checking the date and time stamp associated with the files. If these are the latest then a restore can be done from <emphasis>disk</emphasis>, otherwise the latest <emphasis>tape</emphasis> will need to loaded prior to running the script.
-      </para>
-      <para>
-	The next thing to do is to determine what type of recovery is required. Ideally we should be able to try for a full recovery (assuming no files are missing on the file system).
-      </para>
-      <para>
-	Check for the following files:
-	<screen width="90">
-	  <computeroutput>
-/u01/app/oracle/oradata/EEMS/control01.ctl
-/u01/app/oracle/oradata/EEMS/control02.ctl
-/u01/app/oracle/oradata/EEMS/control03.ctl
-/u01/app/oracle/oradata/EEMS/redo01.log
-	  </computeroutput>
-	</screen>
-If these files exist then we can try for a full recovery, otherwise it will have to be an incomplete recovery.
-      </para>
-  
-    <sect2 id="s2-full-recov">
-      <title>Full Recovery</title>
-      <para>
-	To recover from current backupset on <emphasis>DISK</emphasis> run:
-	<screen width="90">
-	  <computeroutput>
-/opt/suretec/backups/scripts/dbserv_rest_db_warm.sh -f EEMS
-	  </computeroutput>
-	</screen>
-      </para>
-      <para>
-	To recover from current backupset on TAPE run:
-	<screen width="90">
-	  <computeroutput>
-/opt/suretec/backups/scripts/dbserv_rest_db_warm.sh -f -sTAPE EEMS
-	  </computeroutput>
-	</screen>
-	Upon completion the database will be shutdown. Start it using the Oracle supplied start-up scripts.
-      </para>
-    </sect2>
-
-    <sect2 id="s2-incomp-recov">
-      <title>Incomplete Recovery</title>
-      <para>
-	We have to rebuild the database from the relevent &RL; backupset and the archive redo log files that are available that are to be found in the following locations:
-	<table id="tb-redo-logs">
-	  <title>Archive Redo log file locations</title>
-	  <tgroup cols="2">
-	    <colspec colnum="1" colname="Directory" colwidth="3" />
-	    <colspec colnum="2" colname="Description" colwidth="1" />
-	    <thead>
-	      <row>
-		<entry>Directory</entry>
-		<entry>Description</entry>
-	      </row>
-	    </thead>
-	    
-	    <tbody>
-	      <row>
-		<entry><filename>/u01/app/oracle/archive/EEMS/</filename></entry>
-		<entry>Primary archive location</entry>
-	      </row>
-	      <row>
-		<entry><filename>/mnt/archdest2/EEMS/</filename></entry>
-		<entry>Secondary archive location (NFS mount)</entry>
-	      </row>
-	    </tbody>
-	  </tgroup>
-	</table>
-      </para>
-      <para>
-	List the contents of either folder by issuing the unix command:
-	<screen width="90">
-	  <computeroutput>
-ls -ltr
-	  </computeroutput>
-	</screen>
-	and note the name of the last file (It will be named along the lines of <filename>1_6_123456.dbf</filename>). 
-      </para>
-      <para>
-	It is also worth checking the date and time of the file to ensure that you are looking at the archive log file closest to the date and time of the "point of failure".
-      </para>
-      <para>
-	To recover from current backupset on <emphasis>DISK</emphasis> run:
-	<screen width="90">
-	  <computeroutput>
-/opt/suretec/backups/scripts/dbserv_rest_db_warm.sh -i&lt;archive logfile&gt; EEMS
-	  </computeroutput>
-	</screen>
-      </para>
-      <para>
-	To recover from current backupset on TAPE run:
-	<screen width="90">
-	  <computeroutput>
-/opt/suretec/backups/scripts/dbserv_rest_db_warm.sh -i&lt;archive logfile&gt; -sTAPE EEMS
-	  </computeroutput>
-	</screen>
-	where <option>&lt;archive logfile&gt;</option> is the name of the latest log file previously noted down.
-      </para>
-      <para>
-	Upon completion the database will be shutdown. Start it using the &OL; supplied start-up scripts.
-      </para>
-    </sect2>
-    </sect1>
-  </chapter>
-
-  <chapter id="ch-faq">
-    <title>FAQ</title>
-    
-    <sect1 id="s2-learnit-scripts">
-      <title>Suretec scripts</title>
-      <qandaset defaultlabel="qanda" id="scripts-faq-list">
-	<?dbhtml toc="1"?>  
-	<qandadiv id="faq-div-understanding-the-scripts">
-	  <title>Understanding the Scripts</title>
-	  <qandaentry>
-	    <question>
-	      <para>
-		What do the scripts do?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		Please read <xref linkend="ch-learnit-backup"></xref>
-	      </para>
-	    </answer>
-	  </qandaentry>
-<qandaentry>
-	    <question>
-	      <para>
-		How many scripts are there?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		Please read <xref linkend="ch-learnit-backup"></xref>
-	      </para>
-	    </answer>
-	  </qandaentry>
-	  <qandaentry>
-	    <question>
-	      <para>
-		How do I know if I have the latest ones?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		By having installed the latest appropriate RPM i.e. <filename>appserv-suretec-&lt;version&gt;.i386.rpm</filename>
-	      </para>
-	    </answer>
-	  </qandaentry>
-	  <qandaentry>
-	    <question>
-	      <para>
-		How do I find out if I have the latest RPMs?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		The current ones are <filename>appserv-suretec-1.0-1.i386.rpm</filename> and <filename>dbserv-suretec-1.0-1.i386.rpm</filename>
-	      </para>
-	      <para>
-		These should only be installed when indicated by Suretec to do so.
-	      </para>
-	    </answer>
-	  </qandaentry>
-	</qandadiv>
-	<qandadiv id="faq-div-using-the-scripts">
-	  <title>Using the scripts</title>
-	  <qandaentry>
-	    <question>
-	      <para>
-		How many scripts are there?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		Please read <xref linkend="ch-learnit-backup"></xref>
-	      </para>
-	    </answer>
-	  </qandaentry>
-	  <qandaentry>
-	    <question>
-	      <para>
-		How do I know which ones to run?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		Please read <xref linkend="ch-learnit-backup"></xref> to decide or see <xref linkend="ch-learnit-contact"></xref>
-	      </para>
-	    </answer>
-	  </qandaentry>
-	  <qandaentry>
-	    <question>
-	      <para>
-		How will they be updated?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		They will be updated by Suretec via a RPM, which you muct install via the command:
-		<screen width="90">
-		  <computeroutput>
-		    rpm -Uvh <filename>&lt;rpm-name.i386.rpm&gt;</filename>
-		  </computeroutput>
-		</screen>
-	      </para>
-	    </answer>
-	  </qandaentry>	
-	</qandadiv>
-      </qandaset>
-    </sect1>  
-    
-    <sect1 id="s2-amanda-faq">
-      <title>Amanda</title>
-      
-      <indexterm>
-	<primary>Amanda</primary>
-	<secondary>what is</secondary>
-      </indexterm>
-      
-      <indexterm>
-	<primary>Amanda</primary>
-	<secondary>commands</secondary>
-      </indexterm>
-      
-      <indexterm>
-	<primary>Amanda</primary>
-	<secondary>resources</secondary>
-      </indexterm> 
-      
-      <qandaset defaultlabel="qanda" id="amanda-faq-list">
-	<?dbhtml toc="1"?>  
-	<qandadiv id="faq-div-understanding-amanda">
-	  <title>Understanding Amanda</title>
-	  <qandaentry>
-	    <question>
-	      <para>
-		What do I do when the mail backup report says that I need to run &amflush;? 
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		What has happened here is that the tape was not in the tape drive when the backup began. You can confirm this by reading the last &amcheck; e-mail which was sent that afternoon.
-	      </para>
-	    <para>
-	      So, to flush the previous days backup to tape, run the command:
-	      <screen width="90">
-		<computeroutput>
-[root@appserv]# su amanda -c "amflush appserv-config"
-		</computeroutput>
-	      </screen>
-	    </para>
-	    </answer>
-	  </qandaentry>
-	  <qandaentry>
-	    <question>
-	      <para>
-		How do I make sure the right tape is in the drive?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		You need to check the e-mail that was sent that afternoon.
-	      </para>
-	    </answer>
-	  </qandaentry>
-	  <qandaentry>
-	    <question>
-	      <para>
-		Will there be a message to tell me to change the tape?
-	      </para>
-	    </question>
-	    <answer>
-	      <para>
-		Yes, there is an e-mail sent everyday a 2pm.
-	      </para>
-	    </answer>
-	  </qandaentry>
-	</qandadiv>
-      </qandaset>
-    </sect1>
-  </chapter>
-    
-  <chapter id="ch-learnit-contact">
+  <chapter id="ch-suretec-contact">
     <title>How to Contact Us</title>
     <mediaobject>
       <imageobject>
@@ -1676,6 +407,12 @@ ls -ltr
     </mediaobject>
     <para>
       We have tested and verified all the information in this guide to the best of our abilities, but you may find that features have changed or that we have let errors slip through. Please let us know of any errors that you find, as well as suggestions for future versions, by writing to:
+
+      <indexterm>
+	<primary>Suretec</primary>
+	<secondary>Contact</secondary>
+      </indexterm>
+
       <address>
 	Suretec Systems Ltd.
 	13 Whiteley Well Place,

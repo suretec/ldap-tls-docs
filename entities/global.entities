@@ -5,12 +5,10 @@
 <!ENTITY SS "Suretec Systems"> <!--The generic term "Suretec Systems" -->
 <!ENTITY FORMAL-SSL "&SS; Ltd."> <!--The generic term "Suretec Systems Limited". -->
 
-
 <!-- Documentation Title Stuff -->
-<!ENTITY L '<trademark class="registered">Learn-IT</trademark>'> <!-- Shortcut for Learn-IT's name -->
 <!ENTITY PROJECT "&FORMAL-SSL; Article"> <!-- Set the default name -->
-<!ENTITY PROJECT-TITLE "Learn-IT Disaster Recovery Documentation"> <!-- Set the default name -->
-<!ENTITY BOOKID "learn-it-drd (14-02-2005)"> <!-- change version of manual and date here -->
+<!ENTITY PROJECT-TITLE 'Suretec <trademark class="trademark">OpenLDAP</trademark> Documention'> <!-- Set the default name -->
+<!ENTITY BOOKID "suretec-ldap-docs (06-03-2005)"> <!-- change version of manual and date here -->
 
 
 <!-- Our legalnotice -->
@@ -27,7 +25,7 @@
 <!ENTITY url.server-tools.win95 'ftp://ftp.microsoft.com/Softlib/MSLFILES/NEXUS.EXE'>
 <!ENTITY url.server-tools.winnt 'ftp://ftp.microsoft.com/Softlib/MSLFILES/SRVTOOLS.EXE'>
 <!ENTITY url.tcpdump 'http://www.tcpdump.org/'>
-<!ENTITY url.samba '<ulink url="http://www.samba.org"/>'>
+<!ENTITY SA '<ulink url="http://www.samba.org">Samba</ulink>'>
 <!ENTITY url.samba-ldap-howto 'http://www.unav.es/cti/ldap-smb-howto.html'>
 <!ENTITY url.samba-tng.home 'http://www.kneschke.de/projekte/samba_tng/'>
 <!ENTITY url.samba.mailinglist.ntdom 'http://lists.samba.org/mailman/samba-ntdom'>
@@ -36,16 +34,13 @@
 <!ENTITY url.samba.specs.old 'ftp://ftp.microsoft.com/developr/drg/CIFS/'>
 <!ENTITY url.rfc.1001 'http://ds.internic.net/rfc/rfc1001.txt'>
 <!ENTITY url.rfc.1002 'http://ds.internic.net/rfc/rfc1002.txt'>
-<!ENTITY SL '<ulink url="http://www.suretecsystems.com">Suretec Systems Ltd.</ulink>'>
+
+<!ENTITY SL '<ulink url="http://www.suretecsystems.com">Suretec</ulink>'>
+<!ENTITY SLL '<ulink url="http://www.suretecsystems.com">Suretec Systems Ltd.</ulink>'>
 <!ENTITY AL '<ulink url="http://www.amanda.org">Amanda</ulink>'>
 <!ENTITY RL '<ulink url="http://www.oracle.com/ecostructure/blueprint_res/start.htm#design_backup_recovery_manager.htm">RMAN</ulink>'>
-<!ENTITY OL '<ulink url="http://www.oracle.com/"><trademark class="registered">Oracle</trademark></ulink>'>
+<!ENTITY OL '<ulink url="http://www.openldap.org/"><trademark class="trademark">OpenLDAP</trademark></ulink>'>
 <!ENTITY OS '<ulink url="http://www.opensource.org/">Open Source</ulink>'>
-
-<!--Custom entities -->
-<!ENTITY E '<application>EEMS</application>'>
-<!ENTITY DB '<hardware>DBSERV</hardware>'>
-<!ENTITY AP '<hardware>APPSERV</hardware>'>
 
 <!-- Misc -->
 <!ENTITY samba.pub.cvshost 'pserver.samba.org'>
@@ -83,234 +78,3 @@
 
 <!ENTITY smbmdash "<?latex --- ?>">
 
-<!-- *** AMANDA stuff from here - Taken from Amanda Docs XML guide - GH - 07.02.05 ***  -->
-
-<!-- Amanda Docs Authors -->
-<!-- Global Entities File -->
-
-<!ENTITY org.amcore_str 'AMANDA Core Team'>
-
-<!-- Author entities -->
-
-<!ENTITY person.amandacore '
-<affiliation>
-	<firstname>&org.amcore_str;</firstname>
-</affiliation>'>
-<!ENTITY author.amandacore '<author>&person.amandacore;</author>'>
-
-
-<!ENTITY email.jlm '<email>martinea@iro.umontreal.ca</email>'>
-<!ENTITY person.jlm '
-<firstname>Jean-Louis</firstname><surname>Martineau</surname>
-<affiliation>
-        <orgname>&org.amcore_str;</orgname>
-        <address>&email.jlm;</address>
-</affiliation>'>
-<!ENTITY author.jlm '<author>&person.jlm;</author>'>
-
-
-<!ENTITY email.sgw '<email>sgw@amanda.org</email>'>
-<!ENTITY person.sgw '
-<firstname>Stefan</firstname><othername>G.</othername><surname>Weichinger</surname>
-<affiliation>
-        <orgname>&org.amcore_str;</orgname>
-        <address>&email.sgw;</address>
-</affiliation>'>
-<!ENTITY author.sgw '<author>&person.sgw;</author>'>
-
-
-<!ENTITY email.jb '<email>jon@jgcomp.com</email>'>
-<!ENTITY person.jb '
-<firstname>Jon</firstname><surname>LaBadie</surname>
-<affiliation>
-        <orgname>&org.amcore_str;</orgname>
-        <address>&email.jb;</address>
-</affiliation>'>
-<!ENTITY author.jb '<author>&person.jb;</author>'>
-
-<!ENTITY email.jrj '<email>jrj@purdue.edu</email>'>
-<!ENTITY person.jrj '
-<firstname>John</firstname><othername>R.</othername><surname>Jackson</surname>
-<affiliation>
-        <orgname>&org.amcore_str;</orgname>
-        <address>&email.jrj;</address>
-</affiliation>'>
-<!ENTITY author.jrj '<author>&person.jrj;</author>'>
-
-<!ENTITY email.mz '<email>M.Zucchi@CIS.UniSA.Edu.Au</email>'>
-<!ENTITY person.mz '
-<firstname>Michael</firstname><surname>Zucchi</surname>
-<affiliation>
-        <orgname>School of Computer and Information Science
-University of South Australia</orgname>
-        <address>&email.mz;</address>
-</affiliation>'>
-<!ENTITY author.mz '<author>&person.mz;</author>'>
-
-<!ENTITY email.ao '<email>oliva@dcc.unicamp.br</email>'>
-<!ENTITY person.ao '
-<firstname>Alexandre</firstname><surname>Oliva</surname>
-<affiliation>
-        <orgname>&org.amcore_str;</orgname>
-        <address>&email.ao;></address>
-</affiliation>'>
-<!ENTITY author.ao '<author>&person.ao;</author>'>
-
-
-<!ENTITY email.jds '<email>jds@amanda.org</email>'>
-<!ENTITY person.jds '
-<firstname>James</firstname><surname>da Silva</surname>
-<affiliation>
-        <orgname>&org.amcore_str;</orgname>
-        <address>&email.jds;</address>
-</affiliation>'>
-<!ENTITY author.jds '<author>&person.jds;</author>'>
-
-<!ENTITY email.mg '<email>kashmir@munge.com</email>'>
-<!ENTITY person.mg '
-<firstname>Mike</firstname><surname>Grupenhoff</surname>
-<affiliation>
-        <orgname>&org.amcore_str;</orgname>
-	<address>&email.mg;</address>
-</affiliation>'>
-<!ENTITY author.mg '<author>&person.mg;</author>'>
-
-<!ENTITY email.gh '<email>ghenry@suretecsystems.com</email>'>
-<!ENTITY person.gh '
-<firstname>Gavin</firstname><surname>Henry</surname>
-<affiliation>
-	<orgname>Suretec Systems Ltd.</orgname>
-	<address>&email.gh;</address>
-</affiliation>'>
-<!ENTITY author.gh '<author>&person.gh;</author>'>
-
-
-<!ENTITY attributions SYSTEM "../howto-attributions.xml">
-
-<!-- AMANDA name -->
-<!ENTITY A '<application><emphasis>AMANDA</emphasis></application>'>
-
-<!-- IDs for AMANDA urls-->
-<!ENTITY url.amanda '<ulink url="http://www.amanda.org"/>'>
-<!ENTITY url.amanda.ftp '<ulink url="ftp://ftp.amanda.org/pub/amanda"/>'>
-<!ENTITY url.amanda.patches '<ulink url="http://www.amanda.org/patches/"/>'>
-<!ENTITY url.amanda.projects '<ulink url="http://www.amanda.org/ongoing.php"/>'>
-<!ENTITY url.amanda.fom '<ulink url="http://www.amanda.org/fom-serve/cache/1.html"/>'>
-<!ENTITY url.amanda.users '<ulink url="http://marc.theaimsgroup.com/?l=amanda-users"/>'>
-<!ENTITY url.amanda.hackers '<ulink url="http://marc.theaimsgroup.com/?l=amanda-hackers"/>'>
-
-<!-- IDs for AMANDA urls-->
-<!ENTITY email.amanda.users '<ulink url="mailto://amanda-users@amanda.org"/>'>
-<!ENTITY email.amanda.hackers '<ulink url="mailto://amanda-hackers@amanda.org"/>'>
-
-<!-- IDs for AMANDA files-->
-<!ENTITY amandaddebug ' <filename>amandad.debug</filename>'>
-<!ENTITY amconf '<filename>amanda.conf</filename>'>
-<!ENTITY amandahosts '<filename>.amandahosts</filename>'>
-<!ENTITY disklist '<filename>disklist</filename>'>
-<!ENTITY amandapass '<filename>/etc/amandapass</filename>'>
-<!ENTITY inetdconf '<filename>/etc/inetd.conf</filename>'>
-<!ENTITY tapelist '<filename>tapelist</filename>'>
-
-<!-- IDs for files used by AMANDA-->
-<!ENTITY dumpdates '<filename>/etc/dumpdates</filename>'>
-
-<!-- IDs for AMANDA commands-->
-<!ENTITY amadmin ' <command>amadmin</command>'>
-<!ENTITY amanda ' <command>amanda</command>'>
-<!ENTITY amcheck ' <command>amcheck</command>'>
-<!ENTITY amcheckdb ' <command>amcheckdb</command>'>
-<!ENTITY amcleanup ' <command>amcleanup</command>'>
-<!ENTITY amdd ' <command>amdd</command>'>
-<!ENTITY amdump ' <command>amdump</command>'>
-<!ENTITY amflush ' <command>amflush</command>'>
-<!ENTITY amgetconf ' <command>amgetconf</command>'>
-<!ENTITY amlabel ' <command>amlabel</command>'>
-<!ENTITY ammt ' <command>ammt</command>'>
-<!ENTITY amoverview ' <command>amoverview</command>'>
-<!ENTITY amplot ' <command>amplot</command>'>
-<!ENTITY amrecover ' <command>amrecover</command>'>
-<!ENTITY amreport ' <command>amreport</command>'>
-<!ENTITY amrestore ' <command>amrestore</command>'>
-<!ENTITY amrmtape ' <command>amrmtape</command>'>
-<!ENTITY amstatus ' <command>amstatus</command>'>
-<!ENTITY amtape ' <command>amtape</command>'>
-<!ENTITY amtapetype ' <command>amtapetype</command>'>
-<!ENTITY amtoc ' <command>amtoc</command>'>
-<!ENTITY amverify ' <command>amverify</command>'>
-<!ENTITY amverifyrun ' <command>amverifyrun</command>'>
-
-<!ENTITY amandad ' <command>amandad</command>'>
-<!ENTITY amandaidx ' <command>amandaidx</command>'>
-<!ENTITY amgetidx ' <command>amgetidx</command>'>
-<!ENTITY amidxtape ' <command>amidxtape </command>'>
-<!ENTITY amidxtaped ' <command>amidxtaped</command>'>
-<!ENTITY amindexd ' <command>amindexd</command>'>
-<!ENTITY amtrmidx ' <command>amtrmidx</command>'>
-<!ENTITY calcsize ' <command>calcsize</command>'>
-<!ENTITY driver ' <command>driver</command>'>
-<!ENTITY dumper ' <command>dumper</command>'>
-<!ENTITY planner ' <command>planner</command>'>
-<!ENTITY reporter ' <command>reporter</command>'>
-<!ENTITY runtar ' <command>runtar</command>'>
-<!ENTITY selfcheck ' <command>selfcheck</command>'>
-<!ENTITY sendbackup ' <command>sendbackup</command>'>
-<!ENTITY sendsize ' <command>sendsize</command>'>
-<!ENTITY taper ' <command>taper</command>'>
-
-<!-- IDs for commands used by AMANDA-->
-<!ENTITY mt '<command>mt</command>'>
-<!ENTITY mtx '<command>mtx</command>'>
-<!ENTITY tar '<command>tar</command>'>
-<!ENTITY gnutar '<command>GNU-tar</command>'>
-<!ENTITY gzip '<command>GNU-zip</command>'>
-
-<!ENTITY dump '<command>dump</command>'>
-<!ENTITY restore.binary '<command>restore</command>'>
-
-<!ENTITY dd '<command>dd</command>'>
-<!ENTITY cpio '<command>cpio</command>'>
-
-<!ENTITY gcc '<command>gcc</command>'>
-<!ENTITY configure '<command>configure</command>'>
-<!ENTITY make '<command>make</command>'>
-<!ENTITY ssh '<command>ssh</command>'>
-<!ENTITY rsh '<command>rsh</command>'>
-<!ENTITY inetd '<command>inetd</command>'>
-<!ENTITY xinetd '<command>xinetd</command>'>
-<!ENTITY lsof '<command>lsof</command>'>
-
-<!--
-   $Id: xinclude.dtd,v 1.1 2004/09/08 17:48:38 weichinger Exp $
-
- The XInclude DTD is from
-
-   http://www.w3.org/TR/xinclude/
-
- and modified in a way which support our needs.
-
--->
-
-<!ELEMENT xi:include (xi:fallback?) >
-<!ATTLIST xi:include
-xmlns:xi            CDATA       #FIXED
-"http://www.w3.org/2001/XInclude"
-href                CDATA       #REQUIRED
-parse               (xml|text)  "xml"
-xpointer            CDATA       #IMPLIED
-encoding            CDATA       #IMPLIED
-accept              CDATA       #IMPLIED
-accept-charset      CDATA       #IMPLIED
-accept-language     CDATA       #IMPLIED >
-<!ELEMENT xi:fallback ANY >
-<!ATTLIST xi:fallback
-xmlns:xi            CDATA       #FIXED "http://www.w3.org/2001/XInclude" >
-<!ENTITY % local.preface.class    "| xi:include" >
-<!ENTITY % local.part.class       "| xi:include" >
-<!ENTITY % local.chapter.class    "| xi:include" >
-<!ENTITY % local.divcomponent.mix "| xi:include" >
-<!ENTITY % local.para.char.mix    "| xi:include" >
-<!ENTITY % local.info.class       "| xi:include" >
-<!ENTITY % local.common.attrib    "xml:base CDATA #IMPLIED
-xmlns:xi            CDATA       #FIXED
-'http://www.w3.org/2001/XInclude'" >
