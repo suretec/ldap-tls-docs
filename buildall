@@ -5,19 +5,19 @@
 # Build all the formats we like and that work
 
 # Doc to process
-XMLDOC=Learn-it-drd-en.xml
-XMLDIR=Learn-it-drd-en
+XMLDOC=suretec-ldap-docs-en.xml
+XMLDIR=suretec-ldap-docs-en
 
 # build all the amanda man pages
-cd ./manpages; for i in *.xml; do xmlto html-nochunks -o ../$XMLDIR/ $i; done;
+#cd ./manpages; for i in *.xml; do xmlto html-nochunks -o ../$XMLDIR/ $i; done;
 # Add stylesheet info
-cd ../$XMLDIR; for i in am*.html; do perl -pi -e 's:</title>:</title><link rel="stylesheet" href="suretec.css" type="text/css">:' $i; done;
+#cd ../$XMLDIR; for i in am*.html; do perl -pi -e 's:</title>:</title><link rel="stylesheet" href="suretec.css" type="text/css">:' $i; done;
 
 
 # build normal docs
-cd ../; make html; make text
+make html; make text
 
 # build the no-chunks html
 xmlto html-nochunks $XMLDOC
 
-perl -pi -e 's:</title>:</title><link rel="stylesheet" href="./css/suretec.css" type="text/css">:' Learn-it-drd-en.html
+perl -pi -e 's:</title>:</title><link rel="stylesheet" href="./css/suretec.css" type="text/css">:' suretec-ldap-docs-en.html
