@@ -27,6 +27,11 @@
 
     <revhistory>
       <revision>
+	<revnumber>0.3</revnumber>
+	<date>06-03-2005</date>
+	<revremark>Completed TLS section</revremark>
+      </revision>
+      <revision>
 	<revnumber>0.2</revnumber>
 	<date>06-03-2005</date>
 	<revremark>Added new sections</revremark>
@@ -348,13 +353,15 @@
 	Up until now, we have discussed the straight forward configuration of <trademark>OpenLDAP</trademark>, with some advanced features such as <xref linkend="s1-acls"></xref>. This does not however, deal with the fact that the network transmissions are still in plain text. This is where <firstterm>Transport Layer Security (TLS)</firstterm> comes in.
       </para>
       <para>
-	<trademark>OpenLDAP</trademark> clients and servers are capable of using the Transport Layer Security (TLS) framework to provide integrity and confidentiality protections in accordance with &mdash; <ulink url="http://rfc.net/rfc2830.html">RFC2830</ulink>; <emphasis>Lightweight Directory Access Protocol (v3): Extension for Transport Layer Security</emphasis>
+	<trademark>OpenLDAP</trademark> clients and servers are capable of using the Transport Layer Security (TLS) framework to provide integrity and confidentiality protections in accordance with - <ulink url="http://rfc.net/rfc2830.html">RFC2830</ulink>; <emphasis>Lightweight Directory Access Protocol (v3): Extension for Transport Layer Security</emphasis>
       </para>
       <para>
-	TLS uses X.509 certificatess. All servers are required to have valid certificates, whereas client certificates are optional. We will only be discussing server certificates.
-      </para>
-      <para>
-	The DN of a server certificate must use the CN attribute to name the server, and the CN must carry the server's fully qualified domain name (FQDN). Additional alias names and wildcards may be present in the <option>subjectAltName</option> certificate extension. More details on server certificate names are in <ulink url="http://rfc.net/rfc2830.html">RFC2830</ulink>.
+	TLS uses X.509 certificates. All servers are required to have valid certificates, whereas client certificates are optional. We will only be discussing server certificates.
+	<tip>
+	  <para>
+	    The DN of a server certificate must use the CN attribute to name the server, and the CN must carry the server's fully qualified domain name (FQDN). Additional alias names and wildcards may be present in the <option>subjectAltName</option> certificate extension. More details on server certificate names are in <ulink url="http://rfc.net/rfc2830.html">RFC2830</ulink>.
+	  </para>
+	</tip>
       </para>
       <para>
 	We will discuss this more in the next sections.
@@ -372,7 +379,7 @@
       </para>
       
       <sect2 id="s1-config-ldap-tls-certs">
-	<title>Certificate Authority</title>
+	<title>Generating the Certificate Authority</title>
       <para>
 	In order to create the relevant certificates, we need to become our own Certificate Authority (CA).
 	<footnote>
@@ -395,10 +402,15 @@
 	TLS is used for many types of servers, but the instructions
 	<footnote>
 	  <para>
-	    For information straight from the horses mouth, please visit &mdash; <ulink url="http://www.openssl.org/docs/HOWTO/">http://www.openssl.org/docs/HOWTO/</ulink>; the main OpenSSL site.     
+	    For information straight from the horses mouth, please visit - <ulink url="http://www.openssl.org/docs/HOWTO/">http://www.openssl.org/docs/HOWTO/</ulink>; the main OpenSSL site.     
 	  </para>
 	</footnote>
 	presented here, are tailored for &OL;.
+	<note>
+	  <para>
+	    The <emphasis>Common Name (CN)</emphasis>, if the following example, <emphasis>MUST</emphasis> be the fully qualified domain name (fqdn) of your ldap server.
+	  </para>
+	</note>
 	  </para>
 	<para>
 	  First we need to generate the CA:
@@ -416,7 +428,7 @@
 	  Now generate the CA:
 	  <footnote>
 	    <para>
-	      Your <filename>CA.pl</filename> or <filename>CA.sh</filename> might not be in the same location as mine is, you can find it by using the <command>locate</command>, i.e. <command>locate CA.pl</command>. If the command complains about the database being too old, run <command>updatedb</command> as <emphasis>root</emphasis>
+	      Your <filename>CA.pl</filename> or <filename>CA.sh</filename> might not be in the same location as mine is, you can find it by using the <command>locate</command> command, i.e. <command>locate CA.pl</command>. If the command complains about the database being too old, run <command>updatedb</command> as <emphasis>root</emphasis> to update it.
 	    </para>
 	  </footnote>
 	  <screen width="90">
@@ -464,8 +476,12 @@
 	    </listitem>
 	  </orderedlist>
 	</para>
+      </sect2>
+
+      <sect2 id="s1-config-ldap-tls-server">
+	<title>Generating the Server Certificate</title>
 	<para>
-	  Next, generate the server certificate:
+	  Now we need to generate the server certificate:
 	  <screen width="90">
 	    <computeroutput>
 	      [ghenry@suretec myCA]$ openssl req -new -nodes -keyout newreq.pem -out newreq.pem
@@ -557,7 +573,13 @@ Signed certificate is in newcert.pem
 	  </screen>
 	</para>
 	<para>
-	  That completes the certificate generation. Next we copy them to the right configuration directories, renaming them at the same time for convenience, change the ownership and finally the permissions:
+	  That completes the server certificate generation. 
+	</para>
+      </sect2>
+      <sect2 id="s1-config-ldap-tls-install">
+	<title>Installing the Certificates</title>
+	<para>
+	  Now we need to copy the certificates to the right configuration directories, rename them at the same time for convenience, change the ownership and finally the permissions:
 	  <screen width="90">
 	    <computeroutput>
 	      [ghenry@suretec myCA]$ cp demoCA/cacert.pem /etc/openldap/
@@ -598,24 +620,83 @@ Signed certificate is in newcert.pem
     <sect1 id="s1-test-ldap-tls">
       <title>Testing</title>
       <para>
-
 	<indexterm>
 	  <primary>Transport Layer Seccurity, TLS</primary>
 	  <secondary>Testing</secondary>
 	</indexterm>
+	This is the easy part. Restart the server:
+	<screen width="90">
+	  <computeroutput>
+	    [ghenry@suretec myCA]$ /etc/init.d/ldap restart
+	    Stopping slapd:                                            [  OK  ]
+	    Checking configuration files for slapd: config file testing succeeded
+	    Starting slapd:                                            [  OK  ]
+	  </computeroutput>
+	</screen>
+	Then, using <command>ldapsearch</command>, test an anonymous search with the <option>-ZZ</option> 
+	<footnote>
+	  <para>
+	    See <command>man ldapsearch</command>:
+	  </para>
+	</footnote>
+	option:
+	<screen width="90">
+	  <computeroutput>
+	    [ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
+	  </computeroutput>
+	</screen>
+	Your results should be the same as before you restarted the server, for example:
+	<screen width="90">
+	  <computeroutput>
+[ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
 
+# extended LDIF
+#
+# LDAPv3
+# base &lt;&gt; with scope sub
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# suretecsystems.com
+dn: dc=ldap,dc=suretecsystems,dc=com
+objectClass: dcObject
+objectClass: organization
+o: Suretec Systems Ltd.
+dc: suretecsystems
+
+# Manager, ldap.suretecsystems.com
+dn: cn=Manager,dc=ldap,dc=suretecsystems,dc=com
+objectClass: organizationalRole
+cn: Manager
+
+# SURETEC, suretecsystems.com
+dn: sambaDomainName=SURETEC,dc=ldap,dc=suretecsystems,dc=com
+sambaDomainName: SURETEC
+sambaSID: S-1-5-21-238355452-1056757430-1592208922
+sambaAlgorithmicRidBase: 1000
+objectClass: sambaDomain
+sambaNextUserRid: 67109862
+sambaNextGroupRid: 67109863
+	  </computeroutput>
+	</screen>
+	If you have any problems, please read <xref linkend="s1-int-ldap-tls"></xref>
       </para>
     </sect1>
 
     <sect1 id="s1-int-ldap-tls">
-      <title>Implementing</title>
+      <title>Troubleshooting</title>
       <para>
-
 	<indexterm>
 	  <primary>Transport Layer Seccurity, TLS</primary>
-	  <secondary>Implementing</secondary>
+	  <secondary>Troubleshooting</secondary>
 	</indexterm>
-
+	The most common error when configuring TLS, as I have already mentioned numerous times, is that the <emphasis>Common Name (CN)</emphasis> you entered in <xref linkend="s1-config-ldap-tls-server"></xref> is <emphasis>NOT</emphasis> the Full Qualified Domain Name (FQDN) of your ldap server.
+      </para>
+      <para>Other errors could be that you have a typo somewhere in your <command>ldapsearch</command> command, or that your have the wrong permissions on the <filename>servercrt.pem</filename> and <filename>cacert.pem</filename> files. They should be set with <command>chmod 640</command>, as per <xref linkend="s1-config-ldap-tls-install"></xref>.
+      </para>
+      <para>
+	For anything else, it's best to read through your ldap logfile or join the &OL; mailing list.
       </para>
     </sect1>
 

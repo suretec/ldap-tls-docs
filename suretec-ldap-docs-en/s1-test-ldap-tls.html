@@ -1,5 +1,58 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>3.3.&#160;Testing</title><link rel="stylesheet" href="suretec.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.65.1"><link rel="home" href="index.html" title="Suretec OpenLDAP Documention"><link rel="up" href="ch-ldap-tls.html" title="Chapter&#160;3.&#160;Transport Layer Security"><link rel="previous" href="s1-config-ldap-tls.html" title="3.2.&#160;Configuring"><link rel="next" href="s1-int-ldap-tls.html" title="3.4.&#160;Implementing"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.3.&#160;Testing</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="s1-config-ldap-tls.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Transport Layer Security</th><td width="20%" align="right">&#160;<a accesskey="n" href="s1-int-ldap-tls.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-test-ldap-tls"></a>3.3.&#160;Testing</h2></div></div><div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>3.3.&#160;Testing</title><link rel="stylesheet" href="suretec.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.65.1"><link rel="home" href="index.html" title="Suretec OpenLDAP Documention"><link rel="up" href="ch-ldap-tls.html" title="Chapter&#160;3.&#160;Transport Layer Security"><link rel="previous" href="s1-config-ldap-tls.html" title="3.2.&#160;Configuring"><link rel="next" href="s1-int-ldap-tls.html" title="3.4.&#160;Troubleshooting"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.3.&#160;Testing</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="s1-config-ldap-tls.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Transport Layer Security</th><td width="20%" align="right">&#160;<a accesskey="n" href="s1-int-ldap-tls.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-test-ldap-tls"></a>3.3.&#160;Testing</h2></div></div><div></div></div><p>
+	<a class="indexterm" name="id2451062"></a>
+	This is the easy part. Restart the server:
+	</p><pre class="screen">
+	  <tt class="computeroutput">
+	    [ghenry@suretec myCA]$ /etc/init.d/ldap restart
+	    Stopping slapd:                                            [  OK  ]
+	    Checking configuration files for slapd: config file testing succeeded
+	    Starting slapd:                                            [  OK  ]
+	  </tt>
+	</pre><p>
+	Then, using <tt class="command">ldapsearch</tt>, test an anonymous search with the <tt class="option">-ZZ</tt> 
+	<sup>[<a name="id2451094" href="#ftn.id2451094">5</a>]</sup>
+	option:
+	</p><pre class="screen">
+	  <tt class="computeroutput">
+	    [ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
+	  </tt>
+	</pre><p>
+	Your results should be the same as before you restarted the server, for example:
+	</p><pre class="screen">
+	  <tt class="computeroutput">
+[ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
 
-	<a class="indexterm" name="id2451036"></a>
+# extended LDIF
+#
+# LDAPv3
+# base &lt;&gt; with scope sub
+# filter: (objectclass=*)
+# requesting: ALL
+#
 
-      </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="s1-config-ldap-tls.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch-ldap-tls.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="s1-int-ldap-tls.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.2.&#160;Configuring&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;3.4.&#160;Implementing</td></tr></table></div></body></html>
+# suretecsystems.com
+dn: dc=ldap,dc=suretecsystems,dc=com
+objectClass: dcObject
+objectClass: organization
+o: Suretec Systems Ltd.
+dc: suretecsystems
+
+# Manager, ldap.suretecsystems.com
+dn: cn=Manager,dc=ldap,dc=suretecsystems,dc=com
+objectClass: organizationalRole
+cn: Manager
+
+# SURETEC, suretecsystems.com
+dn: sambaDomainName=SURETEC,dc=ldap,dc=suretecsystems,dc=com
+sambaDomainName: SURETEC
+sambaSID: S-1-5-21-238355452-1056757430-1592208922
+sambaAlgorithmicRidBase: 1000
+objectClass: sambaDomain
+sambaNextUserRid: 67109862
+sambaNextGroupRid: 67109863
+	  </tt>
+	</pre><p>
+	If you have any problems, please read <a href="s1-int-ldap-tls.html" title="3.4.&#160;Troubleshooting">Section&#160;3.4, &#8220;Troubleshooting&#8221;</a>
+      </p><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.id2451094" href="#id2451094">5</a>] </sup>
+	    See <tt class="command">man ldapsearch</tt>:
+	  </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="s1-config-ldap-tls.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch-ldap-tls.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="s1-int-ldap-tls.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.2.&#160;Configuring&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;3.4.&#160;Troubleshooting</td></tr></table></div></body></html>
