@@ -39,7 +39,7 @@
 <!ENTITY SLL '<ulink url="http://www.suretecsystems.com">Suretec Systems Ltd.</ulink>'>
 <!ENTITY AL '<ulink url="http://www.amanda.org">Amanda</ulink>'>
 <!ENTITY RL '<ulink url="http://www.oracle.com/ecostructure/blueprint_res/start.htm#design_backup_recovery_manager.htm">RMAN</ulink>'>
-<!ENTITY OL '<ulink url="http://www.openldap.org/"><trademark class="trademark">OpenLDAP</trademark></ulink>'>
+<!ENTITY OL '<ulink url="http://www.openldap.org/"><trademark>OpenLDAP</trademark></ulink>'>
 <!ENTITY OS '<ulink url="http://www.opensource.org/">Open Source</ulink>'>
 
 <!-- Misc -->

@@ -34,9 +34,10 @@ pod2usage(1) if $help;
 pod2usage(-verbose => 2) if $man;
 
 if ($validate) {
+    print "\nValidating Docbook XML file...\n";
     !system "xmllint --xinclude --loaddtd --noout --postvalid $validate"
-	or die "\nNot Valid!!!\n\n";
-    print "Validating Docbook XML now...\n\nLooks good!!\n\n";
+	or die "\nNot Valid!!!\n\nPlease review your file.\n\n";
+    print "\nLooks good!!\n\nYou can go ahead and generate your docs.\n\n";
     exit 0;
 }
 
