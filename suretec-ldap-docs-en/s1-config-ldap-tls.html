@@ -1,17 +1,17 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>3.2.&#160;Configuring</title><link rel="stylesheet" href="suretec.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.65.1"><link rel="home" href="index.html" title="Suretec OpenLDAP Documention"><link rel="up" href="ch-ldap-tls.html" title="Chapter&#160;3.&#160;Transport Layer Security"><link rel="previous" href="ch-ldap-tls.html" title="Chapter&#160;3.&#160;Transport Layer Security"><link rel="next" href="s1-test-ldap-tls.html" title="3.3.&#160;Testing"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.2.&#160;Configuring</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch-ldap-tls.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Transport Layer Security</th><td width="20%" align="right">&#160;<a accesskey="n" href="s1-test-ldap-tls.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-config-ldap-tls"></a>3.2.&#160;Configuring</h2></div></div><div></div></div><p>
-	<a class="indexterm" name="id2447933"></a>
+	<a class="indexterm" name="id2756702"></a>
 	Now on to the good bit.
       </p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s1-config-ldap-tls-certs"></a>3.2.1.&#160;Generating the Certificate Authority</h3></div></div><div></div></div><p>
 	In order to create the relevant certificates, we need to become our own Certificate Authority (CA).
-	<sup>[<a name="id2450607" href="#ftn.id2450607">1</a>]</sup>
+	<sup>[<a name="id2759391" href="#ftn.id2759391">1</a>]</sup>
 	 This is necessary, so we can sign the server certificate.
       </p><p>
 	We will be using the <a href="http://www.openssl.org" target="_top">OpenSSL</a>
-	<sup>[<a name="id2450645" href="#ftn.id2450645">2</a>]</sup>
+	<sup>[<a name="id2759429" href="#ftn.id2759429">2</a>]</sup>
 	software for this, which is included with every great <span class="trademark">Linux</span>&#174; distribution.
       </p><p>
 	TLS is used for many types of servers, but the instructions
-	<sup>[<a name="id2450665" href="#ftn.id2450665">3</a>]</sup>
+	<sup>[<a name="id2759450" href="#ftn.id2759450">3</a>]</sup>
 	presented here, are tailored for <a href="http://www.openldap.org/" target="_top"><span class="trademark">OpenLDAP</span>&#8482;</a>.
 	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="./stylesheet-images/note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top"><p>
 	    The <span class="emphasis"><em>Common Name (CN)</em></span>, if the following example, <span class="emphasis"><em>MUST</em></span> be the fully qualified domain name (fqdn) of your ldap server.
@@ -20,44 +20,44 @@
 	  First we need to generate the CA:
 	  </p><pre class="screen">
 	    <tt class="computeroutput">
-	      [ghenry@suretec ldap-docs]$ mkdir myCA
+[ghenry@suretec ldap-docs]$ mkdir myCA
 	    </tt>
 	  </pre><p>
 	  Move into that directory:
 	  </p><pre class="screen">
 	    <tt class="computeroutput">
-	      [ghenry@suretec ldap-docs]$ cd myCA
+[ghenry@suretec ldap-docs]$ cd myCA
 	    </tt>
 	  </pre><p>
 	  Now generate the CA:
-	  <sup>[<a name="id2450727" href="#ftn.id2450727">4</a>]</sup>
+	  <sup>[<a name="id2759511" href="#ftn.id2759511">4</a>]</sup>
 	  </p><pre class="screen">
 	    <tt class="computeroutput">
-	      [ghenry@suretec myCA]$ /usr/share/ssl/misc/CA.pl -newca
-	      CA certificate filename (or enter to create)
+[ghenry@suretec myCA]$ /usr/share/ssl/misc/CA.pl -newca
+CA certificate filename (or enter to create)
 	      
-	      Making CA certificate ...
-	      Generating a 1024 bit RSA private key
-	      .......................++++++
-	      .............................++++++
-	      writing new private key to './demoCA/private/cakey.pem'
-	      Enter PEM pass phrase:
-	      Verifying - Enter PEM pass phrase:
-	      -----
-	      You are about to be asked to enter information that will be incorporated
-	      into your certificate request.
-	      What you are about to enter is what is called a Distinguished Name or a DN.
-	      There are quite a few fields but you can leave some blank
-	      For some fields there will be a default value,
-	      If you enter '.', the field will be left blank.
-	      -----
-	      Country Name (2 letter code) [AU]:GB
-	      State or Province Name (full name) [Some-State]:Aberdeenshire
-	      Locality Name (eg, city) []:Aberdeen
-	      Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
-	      Organizational Unit Name (eg, section) []:IT
-	      Common Name (eg, YOUR name) []:ldap.suretecsystems.com
-	      Email Address []:support@suretecsystems.com
+Making CA certificate ...
+Generating a 1024 bit RSA private key
+.......................++++++
+.............................++++++
+writing new private key to './demoCA/private/cakey.pem'
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:GB
+State or Province Name (full name) [Some-State]:Aberdeenshire
+Locality Name (eg, city) []:Aberdeen
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, YOUR name) []:ldap.suretecsystems.com
+Email Address []:support@suretecsystems.com
 	    </tt>
 	  </pre><p>
 	</p><p>
@@ -71,31 +71,31 @@
 	  Now we need to generate the server certificate:
 	  </p><pre class="screen">
 	    <tt class="computeroutput">
-	      [ghenry@suretec myCA]$ openssl req -new -nodes -keyout newreq.pem -out newreq.pem
-	      Generating a 1024 bit RSA private key
-	      .............++++++
-	      ........................................................++++++
-	      writing new private key to 'newreq.pem'
-	      -----
-	      You are about to be asked to enter information that will be incorporated
-	      into your certificate request.
-	      What you are about to enter is what is called a Distinguished Name or a DN.
-	      There are quite a few fields but you can leave some blank
-	      For some fields there will be a default value,
-	      If you enter '.', the field will be left blank.
-	      -----
-	      Country Name (2 letter code) [AU]:GB
-	      State or Province Name (full name) [Some-State]:Aberdeenshire
-	      Locality Name (eg, city) []:Aberdeen
-	      Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
-	      Organizational Unit Name (eg, section) []:IT
-	      Common Name (eg, YOUR name) []:ldap.suretecsystems.com
-	      Email Address []:support@suretecsystems.com
+[ghenry@suretec myCA]$ openssl req -new -nodes -keyout newreq.pem -out newreq.pem
+Generating a 1024 bit RSA private key
+.............++++++
+........................................................++++++
+writing new private key to 'newreq.pem'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:GB
+State or Province Name (full name) [Some-State]:Aberdeenshire
+Locality Name (eg, city) []:Aberdeen
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, YOUR name) []:ldap.suretecsystems.com
+Email Address []:support@suretecsystems.com
 	      
-	      Please enter the following 'extra' attributes
-	      to be sent with your certificate request
-	      A challenge password []:
-	      An optional company name []:
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
 	    </tt>
 	  </pre><p>
 	</p><p>
@@ -155,11 +155,11 @@ Signed certificate is in newcert.pem
 	  Now we need to copy the certificates to the right configuration directories, rename them at the same time for convenience, change the ownership and finally the permissions:
 	  </p><pre class="screen">
 	    <tt class="computeroutput">
-	      [ghenry@suretec myCA]$ cp demoCA/cacert.pem /etc/openldap/
-	      [ghenry@suretec myCA]$ cp newcert.pem /etc/openldap/servercrt.pem
-	      [ghenry@suretec myCA]$ cp newreq.pem /etc/openldap/serverkey.pem
-	      [ghenry@suretec myCA]$ chown ldap.ldap /etc/openldap/*.pem
-	      [ghenry@suretec myCA]$ chmod 640 /etc/openldap/cacert.pem; chmod 600 /etc/openldap/serverkey.pem
+[ghenry@suretec myCA]$ cp demoCA/cacert.pem /etc/openldap/
+[ghenry@suretec myCA]$ cp newcert.pem /etc/openldap/servercrt.pem
+[ghenry@suretec myCA]$ cp newreq.pem /etc/openldap/serverkey.pem
+[ghenry@suretec myCA]$ chown ldap.ldap /etc/openldap/*.pem
+[ghenry@suretec myCA]$ chmod 640 /etc/openldap/cacert.pem; chmod 600 /etc/openldap/serverkey.pem
 	    </tt>
 	  </pre><p>
 	</p><p>
@@ -168,26 +168,26 @@ Signed certificate is in newcert.pem
 	  <tt class="filename">slapd.conf</tt>
 	  </p><pre class="screen">
 	    <tt class="computeroutput">
-	      TLSCertificateFile /etc/openldap/servercrt.pem
-	      TLSCertificateKeyFile /etc/openldap/serverkey.pem
-	      TLSCACertificateFile /etc/openldap/cacert.pem
+TLSCertificateFile /etc/openldap/servercrt.pem
+TLSCertificateKeyFile /etc/openldap/serverkey.pem
+TLSCACertificateFile /etc/openldap/cacert.pem
 	    </tt>
 	  </pre><p>
 	</p><p>
 	  <tt class="filename">ldap.conf</tt>
 	  </p><pre class="screen">
 	    <tt class="computeroutput">
-	      TLS_CACERT /etc/openldap/cacert.pem
+TLS_CACERT /etc/openldap/cacert.pem
 	    </tt>
 	  </pre><p>
 	</p><p>
 	  That's all there is to it. Now on to <a href="s1-test-ldap-tls.html" title="3.3.&#160;Testing">Section&#160;3.3, &#8220;Testing&#8221;</a>
-	</p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.id2450607" href="#id2450607">1</a>] </sup>
+	</p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.id2759391" href="#id2759391">1</a>] </sup>
 	    We could however, get our generated server certificate signed by proper CAs, like <a href="http://www.thawte.com/" target="_top">Thawte</a> and <a href="http://www.verisign.com/" target="_top">VeriSign</a>, which you pay for, or the free ones, via <a href="http://www.cacert.org/" target="_top">CAcert</a>
-	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2450645" href="#id2450645">2</a>] </sup>
+	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2759429" href="#id2759429">2</a>] </sup>
 	    The downside to making our own CA, is that the certificate is not automatically recognised by clients, like the commercial ones are.
-	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2450665" href="#id2450665">3</a>] </sup>
+	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2759450" href="#id2759450">3</a>] </sup>
 	    For information straight from the horses mouth, please visit - <a href="http://www.openssl.org/docs/HOWTO/" target="_top">http://www.openssl.org/docs/HOWTO/</a>; the main OpenSSL site.     
-	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2450727" href="#id2450727">4</a>] </sup>
+	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2759511" href="#id2759511">4</a>] </sup>
 	      Your <tt class="filename">CA.pl</tt> or <tt class="filename">CA.sh</tt> might not be in the same location as mine is, you can find it by using the <tt class="command">locate</tt> command, i.e. <tt class="command">locate CA.pl</tt>. If the command complains about the database being too old, run <tt class="command">updatedb</tt> as <span class="emphasis"><em>root</em></span> to update it.
 	    </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch-ldap-tls.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch-ldap-tls.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="s1-test-ldap-tls.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&#160;3.&#160;Transport Layer Security&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;3.3.&#160;Testing</td></tr></table></div></body></html>

@@ -27,6 +27,11 @@
 
     <revhistory>
       <revision>
+	<revnumber>0.3.1</revnumber>
+	<date>18-03-2005</date>
+	<revremark>Minor formatting changes.</revremark>
+      </revision>
+      <revision>
 	<revnumber>0.3</revnumber>
 	<date>06-03-2005</date>
 	<revremark>Completed TLS section</revremark>
@@ -416,13 +421,13 @@
 	  First we need to generate the CA:
 	  <screen width="90">
 	    <computeroutput>
-	      [ghenry@suretec ldap-docs]$ mkdir myCA
+[ghenry@suretec ldap-docs]$ mkdir myCA
 	    </computeroutput>
 	  </screen>
 	  Move into that directory:
 	  <screen width="90">
 	    <computeroutput>
-	      [ghenry@suretec ldap-docs]$ cd myCA
+[ghenry@suretec ldap-docs]$ cd myCA
 	    </computeroutput>
 	  </screen>
 	  Now generate the CA:
@@ -433,31 +438,31 @@
 	  </footnote>
 	  <screen width="90">
 	    <computeroutput>
-	      [ghenry@suretec myCA]$ /usr/share/ssl/misc/CA.pl -newca
-	      CA certificate filename (or enter to create)
+[ghenry@suretec myCA]$ /usr/share/ssl/misc/CA.pl -newca
+CA certificate filename (or enter to create)
 	      
-	      Making CA certificate ...
-	      Generating a 1024 bit RSA private key
-	      .......................++++++
-	      .............................++++++
-	      writing new private key to './demoCA/private/cakey.pem'
-	      Enter PEM pass phrase:
-	      Verifying - Enter PEM pass phrase:
-	      -----
-	      You are about to be asked to enter information that will be incorporated
-	      into your certificate request.
-	      What you are about to enter is what is called a Distinguished Name or a DN.
-	      There are quite a few fields but you can leave some blank
-	      For some fields there will be a default value,
-	      If you enter '.', the field will be left blank.
-	      -----
-	      Country Name (2 letter code) [AU]:GB
-	      State or Province Name (full name) [Some-State]:Aberdeenshire
-	      Locality Name (eg, city) []:Aberdeen
-	      Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
-	      Organizational Unit Name (eg, section) []:IT
-	      Common Name (eg, YOUR name) []:ldap.suretecsystems.com
-	      Email Address []:support@suretecsystems.com
+Making CA certificate ...
+Generating a 1024 bit RSA private key
+.......................++++++
+.............................++++++
+writing new private key to './demoCA/private/cakey.pem'
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:GB
+State or Province Name (full name) [Some-State]:Aberdeenshire
+Locality Name (eg, city) []:Aberdeen
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, YOUR name) []:ldap.suretecsystems.com
+Email Address []:support@suretecsystems.com
 	    </computeroutput>
 	  </screen>
 	</para>
@@ -484,31 +489,31 @@
 	  Now we need to generate the server certificate:
 	  <screen width="90">
 	    <computeroutput>
-	      [ghenry@suretec myCA]$ openssl req -new -nodes -keyout newreq.pem -out newreq.pem
-	      Generating a 1024 bit RSA private key
-	      .............++++++
-	      ........................................................++++++
-	      writing new private key to 'newreq.pem'
-	      -----
-	      You are about to be asked to enter information that will be incorporated
-	      into your certificate request.
-	      What you are about to enter is what is called a Distinguished Name or a DN.
-	      There are quite a few fields but you can leave some blank
-	      For some fields there will be a default value,
-	      If you enter '.', the field will be left blank.
-	      -----
-	      Country Name (2 letter code) [AU]:GB
-	      State or Province Name (full name) [Some-State]:Aberdeenshire
-	      Locality Name (eg, city) []:Aberdeen
-	      Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
-	      Organizational Unit Name (eg, section) []:IT
-	      Common Name (eg, YOUR name) []:ldap.suretecsystems.com
-	      Email Address []:support@suretecsystems.com
+[ghenry@suretec myCA]$ openssl req -new -nodes -keyout newreq.pem -out newreq.pem
+Generating a 1024 bit RSA private key
+.............++++++
+........................................................++++++
+writing new private key to 'newreq.pem'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:GB
+State or Province Name (full name) [Some-State]:Aberdeenshire
+Locality Name (eg, city) []:Aberdeen
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, YOUR name) []:ldap.suretecsystems.com
+Email Address []:support@suretecsystems.com
 	      
-	      Please enter the following 'extra' attributes
-	      to be sent with your certificate request
-	      A challenge password []:
-	      An optional company name []:
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
 	    </computeroutput>
 	  </screen>
 	</para>	
@@ -582,11 +587,11 @@ Signed certificate is in newcert.pem
 	  Now we need to copy the certificates to the right configuration directories, rename them at the same time for convenience, change the ownership and finally the permissions:
 	  <screen width="90">
 	    <computeroutput>
-	      [ghenry@suretec myCA]$ cp demoCA/cacert.pem /etc/openldap/
-	      [ghenry@suretec myCA]$ cp newcert.pem /etc/openldap/servercrt.pem
-	      [ghenry@suretec myCA]$ cp newreq.pem /etc/openldap/serverkey.pem
-	      [ghenry@suretec myCA]$ chown ldap.ldap /etc/openldap/*.pem
-	      [ghenry@suretec myCA]$ chmod 640 /etc/openldap/cacert.pem; chmod 600 /etc/openldap/serverkey.pem
+[ghenry@suretec myCA]$ cp demoCA/cacert.pem /etc/openldap/
+[ghenry@suretec myCA]$ cp newcert.pem /etc/openldap/servercrt.pem
+[ghenry@suretec myCA]$ cp newreq.pem /etc/openldap/serverkey.pem
+[ghenry@suretec myCA]$ chown ldap.ldap /etc/openldap/*.pem
+[ghenry@suretec myCA]$ chmod 640 /etc/openldap/cacert.pem; chmod 600 /etc/openldap/serverkey.pem
 	    </computeroutput>
 	  </screen>
 	</para>
@@ -597,9 +602,9 @@ Signed certificate is in newcert.pem
 	  <filename>slapd.conf</filename>
 	  <screen width="90">
 	    <computeroutput>
-	      TLSCertificateFile /etc/openldap/servercrt.pem
-	      TLSCertificateKeyFile /etc/openldap/serverkey.pem
-	      TLSCACertificateFile /etc/openldap/cacert.pem
+TLSCertificateFile /etc/openldap/servercrt.pem
+TLSCertificateKeyFile /etc/openldap/serverkey.pem
+TLSCACertificateFile /etc/openldap/cacert.pem
 	    </computeroutput>
 	  </screen>
 	</para>
@@ -607,7 +612,7 @@ Signed certificate is in newcert.pem
 	  <filename>ldap.conf</filename>
 	  <screen width="90">
 	    <computeroutput>
-	      TLS_CACERT /etc/openldap/cacert.pem
+TLS_CACERT /etc/openldap/cacert.pem
 	    </computeroutput>
 	  </screen>
 	</para>
@@ -627,10 +632,10 @@ Signed certificate is in newcert.pem
 	This is the easy part. Restart the server:
 	<screen width="90">
 	  <computeroutput>
-	    [ghenry@suretec myCA]$ /etc/init.d/ldap restart
-	    Stopping slapd:                                            [  OK  ]
-	    Checking configuration files for slapd: config file testing succeeded
-	    Starting slapd:                                            [  OK  ]
+[ghenry@suretec myCA]$ /etc/init.d/ldap restart
+Stopping slapd:                                            [  OK  ]
+Checking configuration files for slapd: config file testing succeeded
+Starting slapd:                                            [  OK  ]
 	  </computeroutput>
 	</screen>
 	Then, using <command>ldapsearch</command>, test an anonymous search with the <option>-ZZ</option> 
@@ -642,7 +647,7 @@ Signed certificate is in newcert.pem
 	option:
 	<screen width="90">
 	  <computeroutput>
-	    [ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
+[ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
 	  </computeroutput>
 	</screen>
 	Your results should be the same as before you restarted the server, for example:
