@@ -1,0 +1,56 @@
+<legalnotice id="legalnotice">
+
+  <para>
+    Permission is granted to copy, distribute, and/or modify this document under
+    the terms of the GNU Free Documentation License, Version 1.2 or any later
+    version published by the Free Software Foundation; with no Invariant
+    Sections, no Front-Cover Texts, and no Back-Cover Texts.  A copy of the
+    license is available at <ulink
+    url="http://www.gnu.org/licenses/fdl.html">http://www.gnu.org/licenses/fdl.html</ulink>.
+  </para>
+
+  <para>
+    This document may be copied and distributed in any medium, either
+    commercially or noncommercially, provided that the GNU Free Documentation
+    License (FDL), the copyright notices, and the license notice saying the GNU
+    FDL applies to the document are reproduced in all copies, and that you add
+    no other conditions whatsoever to those of the GNU FDL.
+  </para>
+
+  <para>
+    The information contained in this manual is subject to change without notice. &SL; shall not be liable for errors contained herein or for incidental or consequential damages in connection with the furnishing, performance, or use of this manual or equipment supplied with this manual. 
+  </para>
+  <para>
+&SL; makes no warranty of any kind with regard to this manual or any equipment supplied with this manual, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose.
+  </para>
+
+  <para>
+    &BOOKID;
+  </para>
+
+  <para>
+    <trademark class="registered">Linux</trademark> is a registered trademark of Linus Torvalds.
+  </para>
+
+  <para>
+    <trademark class="registered">Motif</trademark> and  <trademark class="registered">UNIX</trademark> are registered trademarks of The Open Group.
+  </para>
+
+  <para>
+     <trademark class="registered">Intel</trademark> and  <trademark class="registered">Pentium</trademark> are registered trademarks of Intel Corporation.  <trademark class="registered">Itanium</trademark> and  <trademark class="registered">Celeron</trademark> are trademarks of Intel Corporation.
+  </para>
+
+  <para>
+    <trademark class="registered">Windows</trademark> is a registered trademark of Microsoft Corporation.
+  </para>
+
+  <para>
+     <trademark class="registered">SSH</trademark> and <trademark class="registered">Secure Shell</trademark> are trademarks of SSH Communications Security, Inc.
+  </para>
+
+  <para>
+    All other trademarks and copyrights referred to are the property of their
+    respective owners.
+  </para>
+
+</legalnotice>

@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Gavin Henry - Invsat Ltd. - 17.01.05
+#
+# Build all the formats we like and that work
+
+# Doc to process
+XMLDOC=Learn-it-drd-en.xml
+XMLDIR=Learn-it-drd-en
+
+# build all the amanda man pages
+cd ./manpages; for i in *.xml; do xmlto html-nochunks -o ../$XMLDIR/ $i; done;
+# Add stylesheet info
+cd ../$XMLDIR; for i in am*.html; do perl -pi -e 's:</title>:</title><link rel="stylesheet" href="suretec.css" type="text/css">:' $i; done;
+
+
+# build normal docs
+cd ../; make html; make text
+
+# build the no-chunks html
+xmlto html-nochunks $XMLDOC
+
+perl -pi -e 's:</title>:</title><link rel="stylesheet" href="./css/suretec.css" type="text/css">:' Learn-it-drd-en.html
