@@ -1,0 +1,770 @@
+Suretec OpenLDAP? Documention
+
+Technical Guide
+
+Gavin Henry
+
+Copyright © 2005 Suretec Systems Ltd., Gavin Henry
+
+Permission is granted to copy, distribute, and/or modify this document under
+the terms of the GNU Free Documentation License, Version 1.2 or any later
+version published by the Free Software Foundation; with no Invariant Sections,
+no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is
+available at http://www.gnu.org/licenses/fdl.html.
+
+This document may be copied and distributed in any medium, either commercially
+or noncommercially, provided that the GNU Free Documentation License (FDL), the
+copyright notices, and the license notice saying the GNU FDL applies to the
+document are reproduced in all copies, and that you add no other conditions
+whatsoever to those of the GNU FDL.
+
+The information contained in this manual is subject to change without notice.
+Suretec shall not be liable for errors contained herein or for incidental or
+consequential damages in connection with the furnishing, performance, or use of
+this manual or equipment supplied with this manual.
+
+Suretec makes no warranty of any kind with regard to this manual or any
+equipment supplied with this manual, including, but not limited to, the implied
+warranties of merchantability and fitness for a particular purpose.
+
+suretec-ldap-docs (06-03-2005)
+
+Linux® is a registered trademark of Linus Torvalds.
+
+Motif® and UNIX® are registered trademarks of The Open Group.
+
+Intel® and Pentium® are registered trademarks of Intel Corporation. Itanium®
+and Celeron® are trademarks of Intel Corporation.
+
+Windows® is a registered trademark of Microsoft Corporation.
+
+SSH® and Secure Shell® are trademarks of SSH Communications Security, Inc.
+
+All other trademarks and copyrights referred to are the property of their
+respective owners.
+
+06-03-2005
+
++-----------------------------------------------------------------------------+
+|Revision History                                                             |
+|-----------------------------------------------------------------------------|
+|Revision 0.3.1                              |18-03-2005                      |
+|-----------------------------------------------------------------------------|
+|Minor formatting changes.                                                    |
+|-----------------------------------------------------------------------------|
+|Revision 0.3                                |06-03-2005                      |
+|-----------------------------------------------------------------------------|
+|Completed TLS section                                                        |
+|-----------------------------------------------------------------------------|
+|Revision 0.2                                |06-03-2005                      |
+|-----------------------------------------------------------------------------|
+|Added new sections                                                           |
+|-----------------------------------------------------------------------------|
+|Revision 0.1                                |05-03-2005                      |
+|-----------------------------------------------------------------------------|
+|Document Creation                                                            |
++-----------------------------------------------------------------------------+
+
+Abstract
+
+The aim of this documentation is to enable any technical user to configure an
+OpenLDAP? Directory server which can be used for any purpose. This guide
+however, will focus on integration with a Samba Server.
+
+Warning
+
+This is not complete. You are warned.
+
+-------------------------------------------------------------------------------
+
+Table of Contents
+
+How To Use This Manual
+
+    Manual Organisation
+    Icons
+    Navigation
+
+1. Introduction
+2. Overview of an OpenLDAP Directory Server
+
+    Aims
+    Configuring
+    Backends
+    Access Control Lists
+
+3. Transport Layer Security
+
+    Introduction
+    Configuring
+
+        Generating the Certificate Authority
+        Generating the Server Certificate
+        Installing the Certificates
+
+    Testing
+    Troubleshooting
+
+4. Simple Authentication and Security Layer
+
+    Introduction
+    Configuring
+    Testing
+    Implementing
+
+5. Heimdal Kerberos 5
+
+    Introduction
+    Configuring
+    Testing
+    Implementing
+
+6. MIT Kerberos 5
+
+    Introduction
+    Configuring
+    Testing
+    Implementing
+
+7. Samba Primary Domain Controller
+
+    Introduction
+    Configuring
+    Testing
+    Implementing
+
+8. How to Contact Us
+Index
+
+How To Use This Manual
+
+Table of Contents
+
+Manual Organisation
+Icons
+Navigation
+
+Manual Organisation
+
+The Suretec OpenLDAP? Documention Technical Guide contains the necessary
+information to install, configure and maintain OpenLDAP? and Samba servers.
+This Guide is divided into the following sections:
+
+Preface
+
+    How to Use This Manual. Provides instructions on how to most effectively
+    utilise the information in this manual.
+
+Chapter 1
+
+    Description of Servers
+
+Chapter 2
+
+    High level description of what is involved in the entire process
+
+Chapter 3
+
+    Low level description of what is involved in the entire process
+
+Chapter 4
+
+    Configuring
+
+Chapter 5
+
+    Technical discussion
+
+Chapter 6
+
+    Scenarios for backup and recovery
+
+Chapter 7
+
+    Frequently asked questions
+
+Chapter 8
+
+    Contact information
+
+Index
+
+    Index of manual
+
+Icons
+
+Throughout this manual, the follows icons are used to highlight information
+worth noting and various forms of warnings.
+
+Note
+
+This is a note.
+
+Tip
+
+This is a tip.
+
+Caution
+
+Use Caution.
+
+Important
+
+This is Important.
+
+Warning
+
+This is a Warning.
+
+Navigation
+
+Navigation of this manual is handled through the web links on the bottom of
+each page. There are four links on most pages, Prev, Next, Up and Home, which
+will take you to the previous page, the next page, up a page and back to the
+front page respectively.
+
+Chapter 1. Introduction
+
+This guide blah.... For more information about any of the technologies used in
+this project, please visit some of the links below:
+
+Suretec Systems Ltd.
+
+    The Linux® company who maintains this Guide.
+
+OpenLDAP?
+
+    The OpenLDAP Project.
+
+Samba
+
+    The Samba Project.
+
+Chapter 2. Overview of an OpenLDAP Directory Server
+
+Table of Contents
+
+Aims
+Configuring
+Backends
+Access Control Lists
+
+Aims
+
+Configuring
+
+Backends
+
+Access Control Lists
+
+Chapter 3. Transport Layer Security
+
+Table of Contents
+
+Introduction
+Configuring
+
+    Generating the Certificate Authority
+    Generating the Server Certificate
+    Installing the Certificates
+
+Testing
+Troubleshooting
+
+Introduction
+
+Up until now, we have discussed the straight forward configuration of
+OpenLDAP?, with some advanced features such as the section called ?Access
+Control Lists?. This does not however, deal with the fact that the network
+transmissions are still in plain text. This is where Transport Layer Security
+(TLS) comes in.
+
+OpenLDAP? clients and servers are capable of using the Transport Layer Security
+(TLS) framework to provide integrity and confidentiality protections in
+accordance with - RFC2830; Lightweight Directory Access Protocol (v3):
+Extension for Transport Layer Security
+
+TLS uses X.509 certificates. All servers are required to have valid
+certificates, whereas client certificates are optional. We will only be
+discussing server certificates.
+
+Tip
+
+The DN of a server certificate must use the CN attribute to name the server,
+and the CN must carry the server's fully qualified domain name (FQDN).
+Additional alias names and wildcards may be present in the subjectAltName
+certificate extension. More details on server certificate names are in RFC2830.
+
+We will discuss this more in the next sections.
+
+Configuring
+
+Now on to the good bit.
+
+Generating the Certificate Authority
+
+In order to create the relevant certificates, we need to become our own
+Certificate Authority (CA). ^[1] This is necessary, so we can sign the server
+certificate.
+
+We will be using the OpenSSL ^[2] software for this, which is included with
+every great Linux® distribution.
+
+TLS is used for many types of servers, but the instructions ^[3] presented
+here, are tailored for OpenLDAP?.
+
+Note
+
+The Common Name (CN), if the following example, MUST be the fully qualified
+domain name (fqdn) of your ldap server.
+
+First we need to generate the CA:
+
+
+[ghenry@suretec ldap-docs]$ mkdir myCA
+
+
+
+Move into that directory:
+
+
+[ghenry@suretec ldap-docs]$ cd myCA
+
+
+
+Now generate the CA: ^[4]
+
+
+[ghenry@suretec myCA]$ /usr/share/ssl/misc/CA.pl -newca
+CA certificate filename (or enter to create)
+
+Making CA certificate ...
+Generating a 1024 bit RSA private key
+.......................++++++
+.............................++++++
+writing new private key to './demoCA/private/cakey.pem'
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:GB
+State or Province Name (full name) [Some-State]:Aberdeenshire
+Locality Name (eg, city) []:Aberdeen
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, YOUR name) []:ldap.suretecsystems.com
+Email Address []:support@suretecsystems.com
+
+
+
+Now, there are some things to note here.
+
+ 1. You MUST remember the password, as we will need it to sign the server
+    certificate..
+
+ 2. The Common Name (CN), MUST be the fully qualified domain name (fqdn) of
+    your ldap server.
+
+Generating the Server Certificate
+
+Now we need to generate the server certificate:
+
+
+[ghenry@suretec myCA]$ openssl req -new -nodes -keyout newreq.pem -out newreq.pem
+Generating a 1024 bit RSA private key
+.............++++++
+........................................................++++++
+writing new private key to 'newreq.pem'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:GB
+State or Province Name (full name) [Some-State]:Aberdeenshire
+Locality Name (eg, city) []:Aberdeen
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, YOUR name) []:ldap.suretecsystems.com
+Email Address []:support@suretecsystems.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+
+
+
+Again, there are some things to note here.
+
+ 1. You should NOT enter a password.
+
+ 2. The Common Name (CN), MUST be the fully qualified domain name (fqdn) of
+    your ldap server.
+
+Now, we sign the certificate with the new CA:
+
+
+[ghenry@suretec myCA]$ /usr/share/ssl/misc/CA.pl -sign
+Using configuration from /etc/ssl/openssl.cnf
+Enter pass phrase for ./demoCA/private/cakey.pem:
+Check that the request matches the signature
+Signature ok
+Certificate Details:
+        Serial Number: 1 (0x1)
+        Validity
+            Not Before: Mar  6 18:22:26 2005 GMT
+            Not After : Mar  6 18:22:26 2006 GMT
+        Subject:
+            countryName               = GB
+            stateOrProvinceName       = Aberdeenshire
+            localityName              = Aberdeen
+            organizationName          = Suretec Systems Ltd.
+            organizationalUnitName    = IT
+            commonName                = ldap.suretecsystems.com
+            emailAddress              = support@suretecsystems.com
+        X509v3 extensions:
+            X509v3 Basic Constraints:
+                CA:FALSE
+            Netscape Comment:
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier:
+                F7:84:87:25:C4:E8:46:6D:0F:47:27:91:F0:16:E0:86:6A:EE:A3:CE
+            X509v3 Authority Key Identifier:
+                keyid:27:44:63:3A:CB:09:DC:B1:FF:32:CC:93:23:A4:F1:B4:D5:F0:7E:CC
+                DirName:/C=GB/ST=Aberdeenshire/L=Aberdeen/O=Suretec Systems Ltd./OU=IT/CN=ldap.suretecsystems.com/emailAddress=support@suretecsystems.com
+                serial:00
+
+Certificate is to be certified until Mar  6 18:22:26 2006 GMT (365 days)
+Sign the certificate? [y/n]:y
+
+
+1 out of 1 certificate requests certified, commit? [y/n]y
+Write out database with 1 new entries
+Data Base Updated
+Signed certificate is in newcert.pem
+
+
+
+That completes the server certificate generation.
+
+Installing the Certificates
+
+Now we need to copy the certificates to the right configuration directories,
+rename them at the same time for convenience, change the ownership and finally
+the permissions:
+
+
+[ghenry@suretec myCA]$ cp demoCA/cacert.pem /etc/openldap/
+[ghenry@suretec myCA]$ cp newcert.pem /etc/openldap/servercrt.pem
+[ghenry@suretec myCA]$ cp newreq.pem /etc/openldap/serverkey.pem
+[ghenry@suretec myCA]$ chown ldap.ldap /etc/openldap/*.pem
+[ghenry@suretec myCA]$ chmod 640 /etc/openldap/cacert.pem; chmod 600 /etc/openldap/serverkey.pem
+
+
+
+Now we just need to add these locations to slapd.conf, anywhere before the
+database declaration and ldap.conf:
+
+slapd.conf
+
+
+TLSCertificateFile /etc/openldap/servercrt.pem
+TLSCertificateKeyFile /etc/openldap/serverkey.pem
+TLSCACertificateFile /etc/openldap/cacert.pem
+
+
+
+ldap.conf
+
+
+TLS_CACERT /etc/openldap/cacert.pem
+
+
+
+That's all there is to it. Now on to the section called ?Testing?
+
+Testing
+
+This is the easy part. Restart the server:
+
+
+[ghenry@suretec myCA]$ /etc/init.d/ldap restart
+Stopping slapd:                                            [  OK  ]
+Checking configuration files for slapd: config file testing succeeded
+Starting slapd:                                            [  OK  ]
+
+
+
+Then, using ldapsearch, test an anonymous search with the -ZZ ^[5] option:
+
+
+[ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
+
+
+
+Your results should be the same as before you restarted the server, for
+example:
+
+
+[ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
+
+# extended LDIF
+#
+# LDAPv3
+# base <> with scope sub
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# suretecsystems.com
+dn: dc=ldap,dc=suretecsystems,dc=com
+objectClass: dcObject
+objectClass: organization
+o: Suretec Systems Ltd.
+dc: suretecsystems
+
+# Manager, ldap.suretecsystems.com
+dn: cn=Manager,dc=ldap,dc=suretecsystems,dc=com
+objectClass: organizationalRole
+cn: Manager
+
+# SURETEC, suretecsystems.com
+dn: sambaDomainName=SURETEC,dc=ldap,dc=suretecsystems,dc=com
+sambaDomainName: SURETEC
+sambaSID: S-1-5-21-238355452-1056757430-1592208922
+sambaAlgorithmicRidBase: 1000
+objectClass: sambaDomain
+sambaNextUserRid: 67109862
+sambaNextGroupRid: 67109863
+
+
+
+If you have any problems, please read the section called ?Troubleshooting?
+
+Troubleshooting
+
+The most common error when configuring TLS, as I have already mentioned
+numerous times, is that the Common Name (CN) you entered in the section called
+?Generating the Server Certificate? is NOT the Full Qualified Domain Name
+(FQDN) of your ldap server.
+
+Other errors could be that you have a typo somewhere in your ldapsearch
+command, or that your have the wrong permissions on the servercrt.pem and
+cacert.pem files. They should be set with chmod 640, as per the section called
+?Installing the Certificates?.
+
+For anything else, it's best to read through your ldap logfile or join the
+OpenLDAP? mailing list.
+
+
+--------------
+
+^[1] We could however, get our generated server certificate signed by proper
+CAs, like Thawte and VeriSign, which you pay for, or the free ones, via CAcert
+
+^[2] The downside to making our own CA, is that the certificate is not
+automatically recognised by clients, like the commercial ones are.
+
+^[3] For information straight from the horses mouth, please visit - http://
+www.openssl.org/docs/HOWTO/; the main OpenSSL site.
+
+^[4] Your CA.pl or CA.sh might not be in the same location as mine is, you can
+find it by using the locate command, i.e. locate CA.pl. If the command
+complains about the database being too old, run updatedb as root to update it.
+
+^[5] See man ldapsearch:
+
+Chapter 4. Simple Authentication and Security Layer
+
+Table of Contents
+
+Introduction
+Configuring
+Testing
+Implementing
+
+Introduction
+
+Configuring
+
+Testing
+
+Implementing
+
+Chapter 5. Heimdal Kerberos 5
+
+Table of Contents
+
+Introduction
+Configuring
+Testing
+Implementing
+
+Introduction
+
+Configuring
+
+Testing
+
+Implementing
+
+Chapter 6. MIT Kerberos 5
+
+Table of Contents
+
+Introduction
+Configuring
+Testing
+Implementing
+
+Introduction
+
+Configuring
+
+Testing
+
+Implementing
+
+Chapter 7. Samba Primary Domain Controller
+
+Table of Contents
+
+Introduction
+Configuring
+Testing
+Implementing
+
+Introduction
+
+Configuring
+
+Testing
+
+Implementing
+
+Chapter 8. How to Contact Us
+
+Suretec Systems Ltd. Logo
+
+We have tested and verified all the information in this guide to the best of
+our abilities, but you may find that features have changed or that we have let
+errors slip through. Please let us know of any errors that you find, as well as
+suggestions for future versions, by writing to:
+
+
+Suretec Systems Ltd.
+13 Whiteley Well Place,
+Inverurie,
+Aberdeenshire,
+AB51 4FP.
+Tel: +44 1224 279484
+Fax: +44 1224 742001 
+      
+
+You can also send messages electronically. Send email to:
+
+<enquiries@suretecsystems.com>
+
+To ask technical questions, send email to:
+
+<support@suretecsystems.com>
+
+Using our online support portal, you can raise support requests:
+
+http://support.suretecsystems.com
+
+For more information about Suretec and the services we provide , see the
+Suretec web site:
+
+http://www.suretecsystems.com
+
+Index
+
+H
+
+Heimdal Kerberos 5
+
+    Configuring, Configuring
+    Implementing, Implementing
+    Introduction, Introduction
+    Testing, Testing
+
+I
+
+Icons
+
+    caution, Icons
+    important, Icons
+    note, Icons
+    tip, Icons
+    warning, Icons
+
+M
+
+MIT Kerberos 5
+
+    Configuring, Configuring
+    Implementing, Implementing
+    Introduction, Introduction
+    Testing, Testing
+
+O
+
+OpenLDAP
+
+    Access Control Lists, Access Control Lists
+    Aims, Aims
+    Backends
+
+        BDB, Backends
+        HDB, Backends
+
+    Config, Configuring
+    Introduction, Introduction
+
+P
+
+PDC
+
+    Configuring, Configuring
+    Implementing, Implementing
+    Introduction, Introduction
+    Testing, Testing
+
+S
+
+Samba
+
+    Introduction, Introduction
+
+Simple Authentication and Security Layer, SASL
+
+    Configuring, Configuring
+    Implementing, Implementing
+    Introduction, Introduction
+    Testing, Testing
+
+Suretec
+
+    Contact, How to Contact Us
+    Introduction, Introduction
+
+T
+
+Transport Layer Seccurity, TLS
+
+    Configuring, Configuring
+    Introduction, Suretec OpenLDAP Documention, Introduction
+    Testing, Testing
+    Troubleshooting, Troubleshooting
+

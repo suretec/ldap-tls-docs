@@ -1,0 +1,488 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Suretec OpenLDAP Documention</title><link rel="stylesheet" href="./css/suretec.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.65.1"><meta name="description" content="
+	The aim of this documentation is to enable any technical user to configure an OpenLDAP Directory server which can be used for any purpose. This guide however, will focus on integration with a Samba Server.
+	
+	 This is not complete. You are warned.
+	
+      "></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="suretec-ldap-docs"></a>Suretec <span class="trademark">OpenLDAP</span>&#8482; Documention</h1></div><div><h2 class="subtitle">Technical Guide</h2></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Gavin</span> <span class="surname">Henry</span></h3></div></div></div><div><p class="copyright">Copyright © 2005 Suretec Systems Ltd., Gavin Henry</p></div><div><div class="legalnotice"><p>
+    Permission is granted to copy, distribute, and/or modify this document under
+    the terms of the GNU Free Documentation License, Version 1.2 or any later
+    version published by the Free Software Foundation; with no Invariant
+    Sections, no Front-Cover Texts, and no Back-Cover Texts.  A copy of the
+    license is available at <a href="http://www.gnu.org/licenses/fdl.html" target="_top">http://www.gnu.org/licenses/fdl.html</a>.
+  </p><p>
+    This document may be copied and distributed in any medium, either
+    commercially or noncommercially, provided that the GNU Free Documentation
+    License (FDL), the copyright notices, and the license notice saying the GNU
+    FDL applies to the document are reproduced in all copies, and that you add
+    no other conditions whatsoever to those of the GNU FDL.
+  </p><p>
+    The information contained in this manual is subject to change without notice. <a href="http://www.suretecsystems.com" target="_top">Suretec</a> shall not be liable for errors contained herein or for incidental or consequential damages in connection with the furnishing, performance, or use of this manual or equipment supplied with this manual. 
+  </p><p>
+<a href="http://www.suretecsystems.com" target="_top">Suretec</a> makes no warranty of any kind with regard to this manual or any equipment supplied with this manual, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose.
+  </p><p>
+    suretec-ldap-docs (06-03-2005)
+  </p><p>
+    <span class="trademark">Linux</span>® is a registered trademark of Linus Torvalds.
+  </p><p>
+    <span class="trademark">Motif</span>® and  <span class="trademark">UNIX</span>® are registered trademarks of The Open Group.
+  </p><p>
+     <span class="trademark">Intel</span>® and  <span class="trademark">Pentium</span>® are registered trademarks of Intel Corporation.  <span class="trademark">Itanium</span>® and  <span class="trademark">Celeron</span>® are trademarks of Intel Corporation.
+  </p><p>
+    <span class="trademark">Windows</span>® is a registered trademark of Microsoft Corporation.
+  </p><p>
+     <span class="trademark">SSH</span>® and <span class="trademark">Secure Shell</span>® are trademarks of SSH Communications Security, Inc.
+  </p><p>
+    All other trademarks and copyrights referred to are the property of their
+    respective owners.
+  </p></div></div><div><p class="pubdate">06-03-2005</p></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 0.3.1</td><td align="left">18-03-2005</td></tr><tr><td align="left" colspan="2">Minor formatting changes.</td></tr><tr><td align="left">Revision 0.3</td><td align="left">06-03-2005</td></tr><tr><td align="left" colspan="2">Completed TLS section</td></tr><tr><td align="left">Revision 0.2</td><td align="left">06-03-2005</td></tr><tr><td align="left" colspan="2">Added new sections</td></tr><tr><td align="left">Revision 0.1</td><td align="left">05-03-2005</td></tr><tr><td align="left" colspan="2">Document Creation</td></tr></table></div></div><div><div class="abstract"><p class="title"><b>Abstract</b></p><p>
+	The aim of this documentation is to enable any technical user to configure an <a href="http://www.openldap.org/" target="_top"><span class="trademark">OpenLDAP</span>&#8482;</a> Directory server which can be used for any purpose. This guide however, will focus on integration with a <a href="http://www.samba.org" target="_top">Samba</a> Server.
+	</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>
+	 This is not complete. You are warned.
+	</p></div><p>
+      </p></div></div></div><div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#pr-howto-use">How To Use This Manual</a></span></dt><dd><dl><dt><span class="sect1"><a href="#s1-layout">Manual Organisation</a></span></dt><dt><span class="sect1"><a href="#s1-icons">Icons</a></span></dt><dt><span class="sect1"><a href="#s1-navigate">Navigation</a></span></dt></dl></dd><dt><span class="chapter"><a href="#ch-ldap-intro">1. Introduction</a></span></dt><dt><span class="chapter"><a href="#ch-ldap-overview">2. Overview of an OpenLDAP Directory Server</a></span></dt><dd><dl><dt><span class="sect1"><a href="#s1-aims">Aims</a></span></dt><dt><span class="sect1"><a href="#s1-config">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-backends">Backends</a></span></dt><dt><span class="sect1"><a href="#s1-acls">Access Control Lists</a></span></dt></dl></dd><dt><span class="chapter"><a href="#ch-ldap-tls">3. Transport Layer Security</a></span></dt><dd><dl><dt><span class="sect1"><a href="#s1-intro-ldap-tls">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-tls">Configuring</a></span></dt><dd><dl><dt><span class="sect2"><a href="#s1-config-ldap-tls-certs">Generating the Certificate Authority</a></span></dt><dt><span class="sect2"><a href="#s1-config-ldap-tls-server">Generating the Server Certificate</a></span></dt><dt><span class="sect2"><a href="#s1-config-ldap-tls-install">Installing the Certificates</a></span></dt></dl></dd><dt><span class="sect1"><a href="#s1-test-ldap-tls">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-tls">Troubleshooting</a></span></dt></dl></dd><dt><span class="chapter"><a href="#ch-ldap-sasl">4. Simple Authentication and Security Layer</a></span></dt><dd><dl><dt><span class="sect1"><a href="#s1-intro-ldap-sasl">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-sasl">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-test-ldap-sasl">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-sasl">Implementing</a></span></dt></dl></dd><dt><span class="chapter"><a href="#ch-ldap-h-krb5">5. Heimdal Kerberos 5</a></span></dt><dd><dl><dt><span class="sect1"><a href="#s1-intro-ldap-h-krb5">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-h-krb5">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-test-ldap-h-krb5">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-h-krb5">Implementing</a></span></dt></dl></dd><dt><span class="chapter"><a href="#ch-ldap-mit-krb5">6. MIT Kerberos 5</a></span></dt><dd><dl><dt><span class="sect1"><a href="#s1-intro-ldap-mit-krb5">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-mit-krb5">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-test-ldap-mit-krb5">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-mit-kb5">Implementing</a></span></dt></dl></dd><dt><span class="chapter"><a href="#ch-ldap-smb-pdc">7. Samba Primary Domain Controller</a></span></dt><dd><dl><dt><span class="sect1"><a href="#s1-intro-ldap-smb-pdc">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-smb-pdc">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-test-ldap-smb-pdc">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-smb-pdc">Implementing</a></span></dt></dl></dd><dt><span class="chapter"><a href="#ch-suretec-contact">8. How to Contact Us</a></span></dt><dt><span class="index"><a href="#generated-index">Index</a></span></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="pr-howto-use"></a>How To Use This Manual</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#s1-layout">Manual Organisation</a></span></dt><dt><span class="sect1"><a href="#s1-icons">Icons</a></span></dt><dt><span class="sect1"><a href="#s1-navigate">Navigation</a></span></dt></dl></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-layout"></a>Manual Organisation</h2></div></div><div></div></div><p>
+	The <a href="http://www.suretecsystems.com" target="_top">Suretec</a> <a href="http://www.openldap.org/" target="_top"><span class="trademark">OpenLDAP</span>&#8482;</a> Documention Technical Guide contains the necessary information to install, configure and maintain <a href="http://www.openldap.org/" target="_top"><span class="trademark">OpenLDAP</span>&#8482;</a> and <a href="http://www.samba.org" target="_top">Samba</a> servers. This Guide is divided into the following sections:
+      </p><div class="variablelist"><dl><dt><span class="term">Preface</span></dt><dd><p>
+	      <span class="emphasis"><em>How to Use This Manual</em></span>. Provides instructions on how to most effectively utilise the information in this manual.
+	      </p></dd><dt><span class="term">Chapter 1</span></dt><dd><p>
+		Description of Servers
+	      </p></dd><dt><span class="term">Chapter 2</span></dt><dd><p>
+		High level description of what is involved in the entire process
+	      </p></dd><dt><span class="term">Chapter 3</span></dt><dd><p>
+		Low level description of what is involved in the entire process
+	      </p></dd><dt><span class="term">Chapter 4</span></dt><dd><p>
+		Configuring
+	      </p></dd><dt><span class="term">Chapter 5</span></dt><dd><p>
+		Technical discussion
+	      </p></dd><dt><span class="term">Chapter 6</span></dt><dd><p>
+		Scenarios for backup and recovery
+	      </p></dd><dt><span class="term">Chapter 7</span></dt><dd><p>
+		Frequently asked questions
+	      </p></dd><dt><span class="term">Chapter 8</span></dt><dd><p>
+		Contact information
+	      </p></dd><dt><span class="term">Index</span></dt><dd><p>
+		Index of manual
+	      </p></dd></dl></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-icons"></a>Icons</h2></div></div><div></div></div><a class="indexterm" name="id2435597"></a><a class="indexterm" name="id2435607"></a><a class="indexterm" name="id2435617"></a><a class="indexterm" name="id2435628"></a><a class="indexterm" name="id2435638"></a><p>
+	Throughout this manual, the follows icons are used to highlight information worth noting and various forms of warnings.
+
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+	    This is a note.
+	  </p></div><p>
+
+	</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+	    This is a tip.
+	  </p></div><p>
+
+	</p><div class="caution" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Caution</h3><p>
+	    Use Caution.
+	  </p></div><p>
+
+	</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Important</h3><p>
+	    This is Important.
+	  </p></div><p>
+	
+	</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>
+	    This is a Warning.
+	  </p></div><p>
+	
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-navigate"></a>Navigation</h2></div></div><div></div></div><p>
+	Navigation of this manual is handled through the web links on the bottom of each page. There are four links on most pages, <span class="emphasis"><em>Prev</em></span>, <span class="emphasis"><em>Next</em></span>, <span class="emphasis"><em>Up</em></span> and <span class="emphasis"><em>Home</em></span>, which will take you to the previous page, the next page, up a page and back to the front page respectively.
+      </p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ch-ldap-intro"></a>Chapter 1. Introduction</h2></div></div><div></div></div><p>
+      This guide blah....  For more information about any of the technologies used in this project, please visit some of the links below:
+    </p><div class="variablelist"><dl><dt><span class="term"><a href="http://www.suretecsystems.com" target="_top">Suretec Systems Ltd.</a></span></dt><dd><p>
+	    The <span class="trademark">Linux</span>® company who maintains this Guide.
+
+	     <a class="indexterm" name="id2436460"></a>
+
+	  </p></dd><dt><span class="term"><a href="http://www.openldap.org/" target="_top"><span class="trademark">OpenLDAP</span>&#8482;</a></span></dt><dd><p>
+	    The OpenLDAP Project.
+
+	    <a class="indexterm" name="id2436501"></a>
+
+	  </p></dd><dt><span class="term"><a href="http://www.samba.org" target="_top">Samba</a></span></dt><dd><p>
+	    The Samba Project.
+
+	    <a class="indexterm" name="id2436528"></a>
+
+	  </p></dd></dl></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ch-ldap-overview"></a>Chapter 2. Overview of an OpenLDAP Directory Server</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#s1-aims">Aims</a></span></dt><dt><span class="sect1"><a href="#s1-config">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-backends">Backends</a></span></dt><dt><span class="sect1"><a href="#s1-acls">Access Control Lists</a></span></dt></dl></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-aims"></a>Aims</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2436562"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-config"></a>Configuring</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2436584"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-backends"></a>Backends</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2436606"></a>
+
+	<a class="indexterm" name="id2436620"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-acls"></a>Access Control Lists</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2436647"></a>
+
+      </p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ch-ldap-tls"></a>Chapter 3. Transport Layer Security</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#s1-intro-ldap-tls">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-tls">Configuring</a></span></dt><dd><dl><dt><span class="sect2"><a href="#s1-config-ldap-tls-certs">Generating the Certificate Authority</a></span></dt><dt><span class="sect2"><a href="#s1-config-ldap-tls-server">Generating the Server Certificate</a></span></dt><dt><span class="sect2"><a href="#s1-config-ldap-tls-install">Installing the Certificates</a></span></dt></dl></dd><dt><span class="sect1"><a href="#s1-test-ldap-tls">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-tls">Troubleshooting</a></span></dt></dl></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-intro-ldap-tls"></a>Introduction</h2></div></div><div></div></div><p>
+	<a class="indexterm" name="id2436679"></a>
+	Up until now, we have discussed the straight forward configuration of <span class="trademark">OpenLDAP</span>&#8482;, with some advanced features such as <a href="#s1-acls" title="Access Control Lists">the section called &#8220;Access Control Lists&#8221;</a>. This does not however, deal with the fact that the network transmissions are still in plain text. This is where <i class="firstterm">Transport Layer Security (TLS)</i> comes in.
+      </p><p>
+	<span class="trademark">OpenLDAP</span>&#8482; clients and servers are capable of using the Transport Layer Security (TLS) framework to provide integrity and confidentiality protections in accordance with - <a href="http://rfc.net/rfc2830.html" target="_top">RFC2830</a>; <span class="emphasis"><em>Lightweight Directory Access Protocol (v3): Extension for Transport Layer Security</em></span>
+      </p><p>
+	TLS uses X.509 certificates. All servers are required to have valid certificates, whereas client certificates are optional. We will only be discussing server certificates.
+	</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+	    The DN of a server certificate must use the CN attribute to name the server, and the CN must carry the server's fully qualified domain name (FQDN). Additional alias names and wildcards may be present in the <tt class="option">subjectAltName</tt> certificate extension. More details on server certificate names are in <a href="http://rfc.net/rfc2830.html" target="_top">RFC2830</a>.
+	  </p></div><p>
+      </p><p>
+	We will discuss this more in the next sections.
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-config-ldap-tls"></a>Configuring</h2></div></div><div></div></div><p>
+	<a class="indexterm" name="id2434419"></a>
+	Now on to the good bit.
+      </p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s1-config-ldap-tls-certs"></a>Generating the Certificate Authority</h3></div></div><div></div></div><p>
+	In order to create the relevant certificates, we need to become our own Certificate Authority (CA).
+	<sup>[<a name="id2437033" href="#ftn.id2437033">1</a>]</sup>
+	 This is necessary, so we can sign the server certificate.
+      </p><p>
+	We will be using the <a href="http://www.openssl.org" target="_top">OpenSSL</a>
+	<sup>[<a name="id2437071" href="#ftn.id2437071">2</a>]</sup>
+	software for this, which is included with every great <span class="trademark">Linux</span>® distribution.
+      </p><p>
+	TLS is used for many types of servers, but the instructions
+	<sup>[<a name="id2437091" href="#ftn.id2437091">3</a>]</sup>
+	presented here, are tailored for <a href="http://www.openldap.org/" target="_top"><span class="trademark">OpenLDAP</span>&#8482;</a>.
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+	    The <span class="emphasis"><em>Common Name (CN)</em></span>, if the following example, <span class="emphasis"><em>MUST</em></span> be the fully qualified domain name (fqdn) of your ldap server.
+	  </p></div><p>
+	  </p><p>
+	  First we need to generate the CA:
+	  </p><pre class="screen">
+	    <tt class="computeroutput">
+[ghenry@suretec ldap-docs]$ mkdir myCA
+	    </tt>
+	  </pre><p>
+	  Move into that directory:
+	  </p><pre class="screen">
+	    <tt class="computeroutput">
+[ghenry@suretec ldap-docs]$ cd myCA
+	    </tt>
+	  </pre><p>
+	  Now generate the CA:
+	  <sup>[<a name="id2437153" href="#ftn.id2437153">4</a>]</sup>
+	  </p><pre class="screen">
+	    <tt class="computeroutput">
+[ghenry@suretec myCA]$ /usr/share/ssl/misc/CA.pl -newca
+CA certificate filename (or enter to create)
+	      
+Making CA certificate ...
+Generating a 1024 bit RSA private key
+.......................++++++
+.............................++++++
+writing new private key to './demoCA/private/cakey.pem'
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:GB
+State or Province Name (full name) [Some-State]:Aberdeenshire
+Locality Name (eg, city) []:Aberdeen
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, YOUR name) []:ldap.suretecsystems.com
+Email Address []:support@suretecsystems.com
+	    </tt>
+	  </pre><p>
+	</p><p>
+	  Now, there are some things to note here. 
+	  </p><div class="orderedlist"><ol type="1"><li><p>
+		You <span class="emphasis"><em>MUST</em></span> remember the password, as we will need it to sign the server certificate..
+	      </p></li><li><p>
+		The <span class="emphasis"><em>Common Name (CN)</em></span>, <span class="emphasis"><em>MUST</em></span> be the fully qualified domain name (fqdn) of your ldap server.
+	      </p></li></ol></div><p>
+	</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s1-config-ldap-tls-server"></a>Generating the Server Certificate</h3></div></div><div></div></div><p>
+	  Now we need to generate the server certificate:
+	  </p><pre class="screen">
+	    <tt class="computeroutput">
+[ghenry@suretec myCA]$ openssl req -new -nodes -keyout newreq.pem -out newreq.pem
+Generating a 1024 bit RSA private key
+.............++++++
+........................................................++++++
+writing new private key to 'newreq.pem'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:GB
+State or Province Name (full name) [Some-State]:Aberdeenshire
+Locality Name (eg, city) []:Aberdeen
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Suretec Systems Ltd.
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, YOUR name) []:ldap.suretecsystems.com
+Email Address []:support@suretecsystems.com
+	      
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+	    </tt>
+	  </pre><p>
+	</p><p>
+	  Again, there are some things to note here. 
+	  </p><div class="orderedlist"><ol type="1"><li><p>
+		You should <span class="emphasis"><em>NOT</em></span> enter a password.
+	      </p></li><li><p>
+		The <span class="emphasis"><em>Common Name (CN)</em></span>, <span class="emphasis"><em>MUST</em></span> be the fully qualified domain name (fqdn) of your ldap server.
+	      </p></li></ol></div><p>
+	</p><p>
+	  Now, we sign the certificate with the new CA:
+	  </p><pre class="screen">
+	    <tt class="computeroutput">
+[ghenry@suretec myCA]$ /usr/share/ssl/misc/CA.pl -sign
+Using configuration from /etc/ssl/openssl.cnf
+Enter pass phrase for ./demoCA/private/cakey.pem:
+Check that the request matches the signature
+Signature ok
+Certificate Details:
+        Serial Number: 1 (0x1)
+        Validity
+            Not Before: Mar  6 18:22:26 2005 GMT
+            Not After : Mar  6 18:22:26 2006 GMT
+        Subject:
+            countryName               = GB
+            stateOrProvinceName       = Aberdeenshire
+            localityName              = Aberdeen
+            organizationName          = Suretec Systems Ltd.
+            organizationalUnitName    = IT
+            commonName                = ldap.suretecsystems.com
+            emailAddress              = support@suretecsystems.com
+        X509v3 extensions:
+            X509v3 Basic Constraints:
+                CA:FALSE
+            Netscape Comment:
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier:
+                F7:84:87:25:C4:E8:46:6D:0F:47:27:91:F0:16:E0:86:6A:EE:A3:CE
+            X509v3 Authority Key Identifier:
+                keyid:27:44:63:3A:CB:09:DC:B1:FF:32:CC:93:23:A4:F1:B4:D5:F0:7E:CC
+                DirName:/C=GB/ST=Aberdeenshire/L=Aberdeen/O=Suretec Systems Ltd./OU=IT/CN=ldap.suretecsystems.com/emailAddress=support@suretecsystems.com
+                serial:00
+
+Certificate is to be certified until Mar  6 18:22:26 2006 GMT (365 days)
+Sign the certificate? [y/n]:y
+
+
+1 out of 1 certificate requests certified, commit? [y/n]y
+Write out database with 1 new entries
+Data Base Updated
+Signed certificate is in newcert.pem
+	    </tt>
+	  </pre><p>
+	</p><p>
+	  That completes the server certificate generation. 
+	</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s1-config-ldap-tls-install"></a>Installing the Certificates</h3></div></div><div></div></div><p>
+	  Now we need to copy the certificates to the right configuration directories, rename them at the same time for convenience, change the ownership and finally the permissions:
+	  </p><pre class="screen">
+	    <tt class="computeroutput">
+[ghenry@suretec myCA]$ cp demoCA/cacert.pem /etc/openldap/
+[ghenry@suretec myCA]$ cp newcert.pem /etc/openldap/servercrt.pem
+[ghenry@suretec myCA]$ cp newreq.pem /etc/openldap/serverkey.pem
+[ghenry@suretec myCA]$ chown ldap.ldap /etc/openldap/*.pem
+[ghenry@suretec myCA]$ chmod 640 /etc/openldap/cacert.pem; chmod 600 /etc/openldap/serverkey.pem
+	    </tt>
+	  </pre><p>
+	</p><p>
+	  Now we just need to add these locations to <tt class="filename">slapd.conf</tt>, anywhere before the <tt class="option">database</tt> declaration and <tt class="filename">ldap.conf</tt>:
+	</p><p>
+	  <tt class="filename">slapd.conf</tt>
+	  </p><pre class="screen">
+	    <tt class="computeroutput">
+TLSCertificateFile /etc/openldap/servercrt.pem
+TLSCertificateKeyFile /etc/openldap/serverkey.pem
+TLSCACertificateFile /etc/openldap/cacert.pem
+	    </tt>
+	  </pre><p>
+	</p><p>
+	  <tt class="filename">ldap.conf</tt>
+	  </p><pre class="screen">
+	    <tt class="computeroutput">
+TLS_CACERT /etc/openldap/cacert.pem
+	    </tt>
+	  </pre><p>
+	</p><p>
+	  That's all there is to it. Now on to <a href="#s1-test-ldap-tls" title="Testing">the section called &#8220;Testing&#8221;</a>
+	</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-test-ldap-tls"></a>Testing</h2></div></div><div></div></div><p>
+	<a class="indexterm" name="id2437482"></a>
+	This is the easy part. Restart the server:
+	</p><pre class="screen">
+	  <tt class="computeroutput">
+[ghenry@suretec myCA]$ /etc/init.d/ldap restart
+Stopping slapd:                                            [  OK  ]
+Checking configuration files for slapd: config file testing succeeded
+Starting slapd:                                            [  OK  ]
+	  </tt>
+	</pre><p>
+	Then, using <span><b class="command">ldapsearch</b></span>, test an anonymous search with the <tt class="option">-ZZ</tt> 
+	<sup>[<a name="id2437513" href="#ftn.id2437513">5</a>]</sup>
+	option:
+	</p><pre class="screen">
+	  <tt class="computeroutput">
+[ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
+	  </tt>
+	</pre><p>
+	Your results should be the same as before you restarted the server, for example:
+	</p><pre class="screen">
+	  <tt class="computeroutput">
+[ghenry@suretec myCA]$ ldapsearch -x -b "dc=ldap,dc=suretecsystems,dc=com" -H 'ldap://ldap.suretecsystems.com:389' -ZZ
+
+# extended LDIF
+#
+# LDAPv3
+# base &lt;&gt; with scope sub
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# suretecsystems.com
+dn: dc=ldap,dc=suretecsystems,dc=com
+objectClass: dcObject
+objectClass: organization
+o: Suretec Systems Ltd.
+dc: suretecsystems
+
+# Manager, ldap.suretecsystems.com
+dn: cn=Manager,dc=ldap,dc=suretecsystems,dc=com
+objectClass: organizationalRole
+cn: Manager
+
+# SURETEC, suretecsystems.com
+dn: sambaDomainName=SURETEC,dc=ldap,dc=suretecsystems,dc=com
+sambaDomainName: SURETEC
+sambaSID: S-1-5-21-238355452-1056757430-1592208922
+sambaAlgorithmicRidBase: 1000
+objectClass: sambaDomain
+sambaNextUserRid: 67109862
+sambaNextGroupRid: 67109863
+	  </tt>
+	</pre><p>
+	If you have any problems, please read <a href="#s1-int-ldap-tls" title="Troubleshooting">the section called &#8220;Troubleshooting&#8221;</a>
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-int-ldap-tls"></a>Troubleshooting</h2></div></div><div></div></div><p>
+	<a class="indexterm" name="id2437591"></a>
+	The most common error when configuring TLS, as I have already mentioned numerous times, is that the <span class="emphasis"><em>Common Name (CN)</em></span> you entered in <a href="#s1-config-ldap-tls-server" title="Generating the Server Certificate">the section called &#8220;Generating the Server Certificate&#8221;</a> is <span class="emphasis"><em>NOT</em></span> the Full Qualified Domain Name (FQDN) of your ldap server.
+      </p><p>Other errors could be that you have a typo somewhere in your <span><b class="command">ldapsearch</b></span> command, or that your have the wrong permissions on the <tt class="filename">servercrt.pem</tt> and <tt class="filename">cacert.pem</tt> files. They should be set with <span><b class="command">chmod 640</b></span>, as per <a href="#s1-config-ldap-tls-install" title="Installing the Certificates">the section called &#8220;Installing the Certificates&#8221;</a>.
+      </p><p>
+	For anything else, it's best to read through your ldap logfile or join the <a href="http://www.openldap.org/" target="_top"><span class="trademark">OpenLDAP</span>&#8482;</a> mailing list.
+      </p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.id2437033" href="#id2437033">1</a>] </sup>
+	    We could however, get our generated server certificate signed by proper CAs, like <a href="http://www.thawte.com/" target="_top">Thawte</a> and <a href="http://www.verisign.com/" target="_top">VeriSign</a>, which you pay for, or the free ones, via <a href="http://www.cacert.org/" target="_top">CAcert</a>
+	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2437071" href="#id2437071">2</a>] </sup>
+	    The downside to making our own CA, is that the certificate is not automatically recognised by clients, like the commercial ones are.
+	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2437091" href="#id2437091">3</a>] </sup>
+	    For information straight from the horses mouth, please visit - <a href="http://www.openssl.org/docs/HOWTO/" target="_top">http://www.openssl.org/docs/HOWTO/</a>; the main OpenSSL site.     
+	  </p></div><div class="footnote"><p><sup>[<a name="ftn.id2437153" href="#id2437153">4</a>] </sup>
+	      Your <tt class="filename">CA.pl</tt> or <tt class="filename">CA.sh</tt> might not be in the same location as mine is, you can find it by using the <span><b class="command">locate</b></span> command, i.e. <span><b class="command">locate CA.pl</b></span>. If the command complains about the database being too old, run <span><b class="command">updatedb</b></span> as <span class="emphasis"><em>root</em></span> to update it.
+	    </p></div><div class="footnote"><p><sup>[<a name="ftn.id2437513" href="#id2437513">5</a>] </sup>
+	    See <span><b class="command">man ldapsearch</b></span>:
+	  </p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ch-ldap-sasl"></a>Chapter 4. Simple Authentication and Security Layer</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#s1-intro-ldap-sasl">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-sasl">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-test-ldap-sasl">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-sasl">Implementing</a></span></dt></dl></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-intro-ldap-sasl"></a>Introduction</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437675"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-config-ldap-sasl"></a>Configuring</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437698"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-test-ldap-sasl"></a>Testing</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437721"></a>
+
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-int-ldap-sasl"></a>Implementing</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437744"></a>
+
+      </p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ch-ldap-h-krb5"></a>Chapter 5. Heimdal Kerberos 5</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#s1-intro-ldap-h-krb5">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-h-krb5">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-test-ldap-h-krb5">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-h-krb5">Implementing</a></span></dt></dl></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-intro-ldap-h-krb5"></a>Introduction</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437777"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-config-ldap-h-krb5"></a>Configuring</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437800"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-test-ldap-h-krb5"></a>Testing</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437822"></a>
+
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-int-ldap-h-krb5"></a>Implementing</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437845"></a>
+
+      </p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ch-ldap-mit-krb5"></a>Chapter 6. MIT Kerberos 5</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#s1-intro-ldap-mit-krb5">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-mit-krb5">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-test-ldap-mit-krb5">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-mit-kb5">Implementing</a></span></dt></dl></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-intro-ldap-mit-krb5"></a>Introduction</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437877"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-config-ldap-mit-krb5"></a>Configuring</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437900"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-test-ldap-mit-krb5"></a>Testing</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437922"></a>
+
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-int-ldap-mit-kb5"></a>Implementing</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437945"></a>
+
+      </p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ch-ldap-smb-pdc"></a>Chapter 7. Samba Primary Domain Controller</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#s1-intro-ldap-smb-pdc">Introduction</a></span></dt><dt><span class="sect1"><a href="#s1-config-ldap-smb-pdc">Configuring</a></span></dt><dt><span class="sect1"><a href="#s1-test-ldap-smb-pdc">Testing</a></span></dt><dt><span class="sect1"><a href="#s1-int-ldap-smb-pdc">Implementing</a></span></dt></dl></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-intro-ldap-smb-pdc"></a>Introduction</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2437978"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-config-ldap-smb-pdc"></a>Configuring</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2438000"></a>
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-test-ldap-smb-pdc"></a>Testing</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2438022"></a>
+
+
+      </p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s1-int-ldap-smb-pdc"></a>Implementing</h2></div></div><div></div></div><p>
+
+	<a class="indexterm" name="id2438044"></a>
+
+      </p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ch-suretec-contact"></a>Chapter 8. How to Contact Us</h2></div></div><div></div></div><div class="mediaobject"><img src="./stylesheet-images/suretec-logo.png" alt="Suretec Systems Ltd. Logo"></div><p>
+      We have tested and verified all the information in this guide to the best of our abilities, but you may find that features have changed or that we have let errors slip through. Please let us know of any errors that you find, as well as suggestions for future versions, by writing to:
+
+      <a class="indexterm" name="id2438104"></a>
+
+      </p><div class="address"><p><br>
+	Suretec Systems Ltd.<br>
+	13 Whiteley Well Place,<br>
+	Inverurie,<br>
+	Aberdeenshire,<br>
+	AB51 4FP.<br>
+	Tel: +44 1224 279484<br>
+	Fax: +44 1224 742001 <br>
+      </p></div><p>
+      You can also send messages electronically. Send email to:
+    </p><p>
+      <tt class="email">&lt;<a href="mailto:enquiries@suretecsystems.com">enquiries@suretecsystems.com</a>&gt;</tt>
+    </p><p>
+      To ask technical questions, send email to: 
+    </p><p>
+      <tt class="email">&lt;<a href="mailto:support@suretecsystems.com">support@suretecsystems.com</a>&gt;</tt>
+    </p><p>
+      Using our online support portal, you can raise support requests:
+    </p><p>
+      <a href="http://support.suretecsystems.com/" target="_top">http://support.suretecsystems.com</a>
+    </p><p>
+      For more information about Suretec and the services we provide , see the Suretec web site:
+    </p><p>
+      <a href="http://www.suretecsystems.com" target="_top">http://www.suretecsystems.com</a>
+    </p></div><div class="index"><div class="titlepage"><div><div><h2 class="title"><a name="generated-index"></a>Index</h2></div></div><div></div></div><div class="index"><div class="indexdiv"><h3>H</h3><dl><dt>Heimdal Kerberos 5</dt><dd><dl><dt>Configuring, <a href="#s1-config-ldap-h-krb5">Configuring</a></dt><dt>Implementing, <a href="#s1-int-ldap-h-krb5">Implementing</a></dt><dt>Introduction, <a href="#s1-intro-ldap-h-krb5">Introduction</a></dt><dt>Testing, <a href="#s1-test-ldap-h-krb5">Testing</a></dt></dl></dd></dl></div><div class="indexdiv"><h3>I</h3><dl><dt>Icons</dt><dd><dl><dt>caution, <a href="#s1-icons">Icons</a></dt><dt>important, <a href="#s1-icons">Icons</a></dt><dt>note, <a href="#s1-icons">Icons</a></dt><dt>tip, <a href="#s1-icons">Icons</a></dt><dt>warning, <a href="#s1-icons">Icons</a></dt></dl></dd></dl></div><div class="indexdiv"><h3>M</h3><dl><dt>MIT Kerberos 5</dt><dd><dl><dt>Configuring, <a href="#s1-config-ldap-mit-krb5">Configuring</a></dt><dt>Implementing, <a href="#s1-int-ldap-mit-kb5">Implementing</a></dt><dt>Introduction, <a href="#s1-intro-ldap-mit-krb5">Introduction</a></dt><dt>Testing, <a href="#s1-test-ldap-mit-krb5">Testing</a></dt></dl></dd></dl></div><div class="indexdiv"><h3>O</h3><dl><dt>OpenLDAP</dt><dd><dl><dt>Access Control Lists, <a href="#s1-acls">Access Control Lists</a></dt><dt>Aims, <a href="#s1-aims">Aims</a></dt><dt>Backends</dt><dd><dl><dt>BDB, <a href="#s1-backends">Backends</a></dt><dt>HDB, <a href="#s1-backends">Backends</a></dt></dl></dd><dt>Config, <a href="#s1-config">Configuring</a></dt><dt>Introduction, <a href="#ch-ldap-intro">Introduction</a></dt></dl></dd></dl></div><div class="indexdiv"><h3>P</h3><dl><dt>PDC</dt><dd><dl><dt>Configuring, <a href="#s1-config-ldap-smb-pdc">Configuring</a></dt><dt>Implementing, <a href="#s1-int-ldap-smb-pdc">Implementing</a></dt><dt>Introduction, <a href="#s1-intro-ldap-smb-pdc">Introduction</a></dt><dt>Testing, <a href="#s1-test-ldap-smb-pdc">Testing</a></dt></dl></dd></dl></div><div class="indexdiv"><h3>S</h3><dl><dt>Samba</dt><dd><dl><dt>Introduction, <a href="#ch-ldap-intro">Introduction</a></dt></dl></dd><dt>Simple Authentication and Security Layer, SASL</dt><dd><dl><dt>Configuring, <a href="#s1-config-ldap-sasl">Configuring</a></dt><dt>Implementing, <a href="#s1-int-ldap-sasl">Implementing</a></dt><dt>Introduction, <a href="#s1-intro-ldap-sasl">Introduction</a></dt><dt>Testing, <a href="#s1-test-ldap-sasl">Testing</a></dt></dl></dd><dt>Suretec</dt><dd><dl><dt>Contact, <a href="#ch-suretec-contact">How to Contact Us</a></dt><dt>Introduction, <a href="#ch-ldap-intro">Introduction</a></dt></dl></dd></dl></div><div class="indexdiv"><h3>T</h3><dl><dt>Transport Layer Seccurity, TLS</dt><dd><dl><dt>Configuring, <a href="#s1-config-ldap-tls">Configuring</a></dt><dt>Introduction, <a href="#suretec-ldap-docs">Suretec OpenLDAP Documention</a>, <a href="#s1-intro-ldap-tls">Introduction</a></dt><dt>Testing, <a href="#s1-test-ldap-tls">Testing</a></dt><dt>Troubleshooting, <a href="#s1-int-ldap-tls">Troubleshooting</a></dt></dl></dd></dl></div></div></div></div></body></html>
