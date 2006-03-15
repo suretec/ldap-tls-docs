@@ -21,12 +21,17 @@
 	  <primary>Transport Layer Seccurity, TLS</primary>
 	  <secondary>Introduction</secondary>
 	</indexterm>    
-    <pubdate>06-03-2005</pubdate>
+    <pubdate>15-03-2006</pubdate>
     
     &LEGALNOTICE;
 
     <revhistory>
       <revision>
+        <revnumber>0.4</revnumber>
+        <date>15-03-2006</date>
+        <revremark>TLS Section updates.</revremark>
+      </revision>      
+    <revision>
 	<revnumber>0.3.1</revnumber>
 	<date>18-03-2005</date>
 	<revremark>Minor formatting changes.</revremark>
@@ -413,7 +418,10 @@
 	presented here, are tailored for &OL;.
 	<note>
 	  <para>
-	    The <emphasis>Common Name (CN)</emphasis>, if the following example, <emphasis>MUST</emphasis> be the fully qualified domain name (fqdn) of your ldap server.
+	    The <emphasis>Common Name (CN)</emphasis>, if the following example can be anything, as it's for your Certificate Authority only.  
+      </para>
+      <para>
+        For your client certificates, the <emphasis>Common Name (CN)</emphasis> <emphasis>MUST</emphasis> be the fully qualified domain name (fqdn) of your ldap server.
 	  </para>
 	</note>
 	  </para>
@@ -467,19 +475,7 @@ Email Address []:support@suretecsystems.com
 	  </screen>
 	</para>
 	<para>
-	  Now, there are some things to note here. 
-	  <orderedlist>
-	    <listitem>
-	      <para>
 		You <emphasis>MUST</emphasis> remember the password, as we will need it to sign the server certificate..
-	      </para>
-	    </listitem>
-	    <listitem>
-	      <para>
-		The <emphasis>Common Name (CN)</emphasis>, <emphasis>MUST</emphasis> be the fully qualified domain name (fqdn) of your ldap server.
-	      </para>
-	    </listitem>
-	  </orderedlist>
 	</para>
       </sect2>
 

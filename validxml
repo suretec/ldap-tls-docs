@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 #################################################
-#  program:     validxml  	                #
+#  program:     validxml     	                #
 #  license:     GPL V2                          #
 #  author:      Gavin Henry                     #
 #  company:     Suretec Systems Ltd.            #
@@ -9,12 +9,12 @@
 #  version:     v0.1                            #
 #                                               #
 #  first draft: 07-02-2005                      #
-#  last update: N/A       			#
-#						#
-#  Description:					#
+#  last update: 11-05-2005 	            		#
+#						                        #
+#  Description:					                #
 #  Quick hack to validate all our docbook-xml	#
-#  stuff. Needs at least on argument		#
-#				                #
+#  stuff. Needs at least one argument		    #
+#				                                #
 #################################################
 
 use warnings;
@@ -48,7 +48,7 @@ __END__
 
 =head1 NAME
 
-validxml - Wrapper for xmllint
+validxml - Wrapper for xmllinti, from the xmlto package
 
 =head1 SYNOPSIS
 
